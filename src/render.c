@@ -6,18 +6,43 @@
 /*   By: smoreron <smoreron@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 21:01:13 by smoreron          #+#    #+#             */
-/*   Updated: 2024/08/08 21:23:48 by smoreron         ###   ########.fr       */
+/*   Updated: 2024/08/10 18:05:09 by smoreron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-
-void draw_vertical_line(t_data *data, int x, int start, int end, int color)
+void clear_image(t_data *data)
 {
-    for (int y = start; y < end; y++)
+    int i;
+    int size = WIN_WIDTH * WIN_HEIGHT;
+
+    for (i = 0; i < size; i++)
+        data->img.data[i] = 0x000000; // Clear to black or any default background color
+}
+
+void draw_floor_and_ceiling(t_data *data)
+{
+    int y;
+    int floorColor = data->floorColor;
+    int ceilingColor = data->ceilingColor;
+
+    for (y = 0; y < WIN_HEIGHT / 2; y++)
     {
-        data->img.data[y * WIN_WIDTH + x] = color;
+        int pixelIndex = y * WIN_WIDTH;
+        for (int x = 0; x < WIN_WIDTH; x++)
+        {
+            data->img.data[pixelIndex + x] = ceilingColor; // Draw ceiling
+        }
+    }
+
+    for (y = WIN_HEIGHT / 2; y < WIN_HEIGHT; y++)
+    {
+        int pixelIndex = y * WIN_WIDTH;
+        for (int x = 0; x < WIN_WIDTH; x++)
+        {
+            data->img.data[pixelIndex + x] = floorColor; // Draw floor
+        }
     }
 }
 
@@ -31,6 +56,9 @@ void render(t_data *data)
     double dirY = data->player.dirY;
     double planeX = data->player.planeX;
     double planeY = data->player.planeY;
+
+    clear_image(data);
+    draw_floor_and_ceiling(data);
 
     for (int x = 0; x < w; x++)
     {
@@ -119,4 +147,3 @@ void render(t_data *data)
 
     mlx_put_image_to_window(data->mlx, data->win, data->img.img_ptr, 0, 0);
 }
-
