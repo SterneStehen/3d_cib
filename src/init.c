@@ -6,7 +6,7 @@
 /*   By: smoreron <smoreron@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 18:08:04 by smoreron          #+#    #+#             */
-/*   Updated: 2024/08/10 18:08:05 by smoreron         ###   ########.fr       */
+/*   Updated: 2024/08/17 21:47:19 by smoreron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@ void init_player(t_data *data)
 void init_window(t_data *data)
 {
     // Initialize the window using MiniLibX
-    data->mlx = mlx_init();
-    if (data->mlx == NULL)
+    data->mlx_ptr = mlx_init();
+    if (data->mlx_ptr == NULL)
     {
         perror("Error initializing MLX");
         exit(1);
     }
 
-    data->win = mlx_new_window(data->mlx, WIN_WIDTH, WIN_HEIGHT, "cub3D");
+    data->win = mlx_new_window(data->mlx_ptr, WIN_WIDTH, WIN_HEIGHT, "cub3D");
     if (data->win == NULL)
     {
         perror("Error creating window");
@@ -44,7 +44,7 @@ void init_window(t_data *data)
 void init_image(t_data *data)
 {
     // Initialize the image buffer
-    data->img.img_ptr = mlx_new_image(data->mlx, WIN_WIDTH, WIN_HEIGHT);
+    data->img.img_ptr = mlx_new_image(data->mlx_ptr, WIN_WIDTH, WIN_HEIGHT);
     if (data->img.img_ptr == NULL)
     {
         perror("Error creating image");

@@ -6,7 +6,7 @@
 /*   By: smoreron <smoreron@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 21:01:20 by smoreron          #+#    #+#             */
-/*   Updated: 2024/08/08 21:15:01 by smoreron         ###   ########.fr       */
+/*   Updated: 2024/08/17 01:24:06 by smoreron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,8 @@ int *parse_map_line(char *line, int width)
 
 void parse_map(const char *file, t_data *data)
 {
-    FILE *fp = fopen(file, "r");
-    if (!fp)
-    {
-        perror("Error opening map file");
-        exit(1);
-    }
-
+    int		file_fd;
+	char	*line;
     char *line = NULL;
     size_t len = 0;
     ssize_t read;
@@ -60,6 +55,16 @@ void parse_map(const char *file, t_data *data)
     int map_lines = 0;
     int **map = NULL;
     int map_width = 0;
+    
+    if (ft_strlen(file) < 5 \
+	|| ft_memcmp(".cub", file + ft_strlen(file) - 4, 5) != 0)
+        errmsg("filename id fail");
+    
+    file_fd = open(filename, O_RDONLY);
+	if (file_fd == -1)
+        errmsg("open");
+
+  
 
     while ((read = getline(&line, &len, fp)) != -1)
     {

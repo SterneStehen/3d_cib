@@ -6,7 +6,7 @@
 /*   By: smoreron <smoreron@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 21:01:29 by smoreron          #+#    #+#             */
-/*   Updated: 2024/08/08 21:23:41 by smoreron         ###   ########.fr       */
+/*   Updated: 2024/08/17 22:22:27 by smoreron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 int close_window(t_data *data)
 {
-    mlx_destroy_window(data->mlx, data->win);
+    mlx_destroy_window(data->mlx_ptr, data->win);
     exit(0);
 }
 
@@ -32,21 +32,26 @@ void init_player(t_data *data)
 int main(int argc, char **argv)
 {
     t_data data;
+    t_game game;
 
     if (argc != 2)
     {
-        fprintf(stderr, "Usage: %s <map_file.cub>\n", argv[0]);
+        printf("Usage: %s <map_file.cub>\n", argv[0]);
         return (1);
     }
+   
+    data.mlx_ptr = mlx_init();
+    if(data.mlx_ptr == NULL)
+        errmsg(data, "error mlx");
 
-    data.mlx = mlx_init();
-    data.win = mlx_new_window(data.mlx, WIN_WIDTH, WIN_HEIGHT, "cub3D");
+
+    data.win = mlx_new_window(data.mlx_ptr, WIN_WIDTH, WIN_HEIGHT, "cub3D");
 
     parse_map(argv[1], &data);
     render(&data);
 
     mlx_hook(data.win, 17, 0, close_window, &data); // Close window on red cross click
-    mlx_loop(data.mlx);
+    mlx_loop(data.mlx_ptr);
 
     return (0);
 }
