@@ -1,32 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smoreron <smoreron@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/17 01:10:24 by smoreron          #+#    #+#             */
-/*   Updated: 2024/08/17 23:55:19 by smoreron         ###   ########.fr       */
+/*   Created: 2023/10/11 16:25:59 by smoreron          #+#    #+#             */
+/*   Updated: 2024/08/17 23:48:25 by smoreron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d.h"
+// #include <stdio.h>
+//#include <string.h>
+#include "libft.h"
 
-void	errmsg(t_data *data, const char *msg)
+size_t	ft_strlen(const char *str)
 {
-	if (msg)
-		printf("Error: %s\n", msg);
-	if (data->win)
-		mlx_destroy_window(data->mlx_ptr, data->win);
-	if (data->mlx_ptr)
-		mlx_destroy_display(data->mlx_ptr);
-	free(data->mlx_ptr);
+	size_t	i;
 
-	exit(EXIT_FAILURE);
+	i = 0;
+	while (str[i] != '\0')
+	{
+		i++;
+	}
+	return (i);
 }
-void	errmsg_simle(const char *msg)
-{
-	if (msg)
-		printf("Error: %s\n", msg);
-	exit(EXIT_FAILURE);
-}
+
+// int main()
+// {	
+// 	char s[] = "sergii";
+// 	printf("len = %d", ft_strlen(s));
+// }

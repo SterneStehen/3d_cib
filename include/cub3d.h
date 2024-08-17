@@ -6,7 +6,7 @@
 /*   By: smoreron <smoreron@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 21:02:06 by smoreron          #+#    #+#             */
-/*   Updated: 2024/08/17 23:17:14 by smoreron         ###   ########.fr       */
+/*   Updated: 2024/08/17 23:25:02 by smoreron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,27 @@ typedef struct  s_player {
     double      planeY;
 }               t_player;
 
-typedef struct  s_data {
-    void        *mlx_ptr;
-    void        *win;
-    t_img       img;
-    t_player    player;
-    int         **worldMap;
-    int         mapWidth;
-    int         mapHeight;
-}               t_data;
+typedef struct s_data
+{
+	int			bits_pix;
+	int			size_line;
+	int			byte_order;
+	int			move_ahed;
+	int			move_back;
+	int			move_left;
+	int			move_right;
+	int			left_rot;
+	int			right_rotet;
+	int			minimap_scale;
+	int			win_width;
+	int			win_height;
+	int			*buffer_pix;
+	int			*overlay_buffer;
+	void		*overlay_image;
+	void		*mlx_ptr;
+	void		*win;
+	void		*img;
+}				t_data;
 
 
 typedef struct s_game
@@ -69,14 +81,27 @@ typedef struct s_game
 	int			i;
 	int			floor_color;
 	int			ceiling_color;
+	int			mapHeight;
+	int			mapWidth;
+	char		**level_map;
+	char		start_dir;
+	int			posXp;
+	int			posYp;
+	int			viewport_width;
+	int			viewport_height;
+	int			is_multiplayer;
+	int			empty_line;
+	int			inside_map;
+	int			total_sum;
+	int			invalid_chars;
 	char		*north_texture;
 	char		*south_texture;
 	char		*west_texture;
 	char		*east_texture;
 	char		*sprite_texture;
-	int			mapHeight;
-	int			mapWidth;
-    е_point2D   *sprites_pos;
+	t_data		surfaces[5];
+	t_data		render_data;
+	е_point2D *sprites_pos;
 }				t_game;
 
 // Function prototypes

@@ -6,7 +6,7 @@
 /*   By: smoreron <smoreron@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 18:08:04 by smoreron          #+#    #+#             */
-/*   Updated: 2024/08/17 21:47:19 by smoreron         ###   ########.fr       */
+/*   Updated: 2024/08/17 23:41:17 by smoreron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,70 @@ void init_game(t_data *data, const char *map_file)
     init_window(data);
     init_image(data);
     init_map(data, map_file);
+}
+
+void	ft_init_data(t_data *data)
+{
+	if (!data)
+		return;
+
+	data->bits_pix = 0;
+	data->size_line = 0;
+	data->byte_order = 0;
+	data->move_ahed = 0;
+	data->move_back = 0;
+	data->move_left = 0;
+	data->move_right = 0;
+	data->left_rot = 0;
+	data->right_rotet = 0;
+	data->minimap_scale = 0;
+	data->win_width = 0;
+	data->win_height = 0;
+	data->buffer_pix = NULL;
+	data->overlay_buffer = NULL;
+	data->overlay_image = NULL;
+	data->mlx_ptr = NULL;
+	data->win = NULL;
+	data->img = NULL;
+}
+
+void	ft_init_game(t_game *game)
+{
+	int i;
+
+	if (!game)
+		return;
+
+	game->res_width = 0;
+	game->res_height = 0;
+	game->i = 0;
+	game->floor_color = -1;  // Обычно используется -1 для обозначения "неопределенного" состояния.
+	game->ceiling_color = -1; // Аналогично для потолка.
+	game->mapHeight = 0;
+	game->mapWidth = 0;
+	game->level_map = NULL;
+	game->start_dir = 'x'; // Неопределенное направление.
+	game->posXp = 0;
+	game->posYp = 0;
+	game->viewport_width = 0;
+	game->viewport_height = 0;
+	game->is_multiplayer = 0;
+	game->empty_line = 0;
+	game->inside_map = 0;
+	game->total_sum = 0;
+	game->invalid_chars = 0;
+	game->north_texture = NULL;
+	game->south_texture = NULL;
+	game->west_texture = NULL;
+	game->east_texture = NULL;
+	game->sprite_texture = NULL;
+	game->sprites_pos = NULL;
+
+    int i = 0;
+	while (i < 5)
+    {
+		ft_init_data(&game->surfaces[i]);
+        i++;
+	}
+	ft_init_data(&game->render_data);
 }

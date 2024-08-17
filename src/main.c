@@ -6,52 +6,39 @@
 /*   By: smoreron <smoreron@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 21:01:29 by smoreron          #+#    #+#             */
-/*   Updated: 2024/08/17 22:22:27 by smoreron         ###   ########.fr       */
+/*   Updated: 2024/08/18 00:21:45 by smoreron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../include/cub3d.h"
 
-int close_window(t_data *data)
-{
-    mlx_destroy_window(data->mlx_ptr, data->win);
-    exit(0);
-}
 
-void init_player(t_data *data)
-{
-    data->player.posX = 22;
-    data->player.posY = 12;
-    data->player.dirX = -1;
-    data->player.dirY = 0;
-    data->player.planeX = 0;
-    data->player.planeY = 0.66;
-}
+int check_input(int argc, char **argv) {
+    int len;
 
-int main(int argc, char **argv)
-{
-    t_data data;
-    t_game game;
-
-    if (argc != 2)
-    {
-        printf("Usage: %s <map_file.cub>\n", argv[0]);
-        return (1);
+    if (argc != 2) {
+        printf("Usage: ./cub3D map.cub\n");
+        return (0);
     }
-   
-    data.mlx_ptr = mlx_init();
-    if(data.mlx_ptr == NULL)
-        errmsg(data, "error mlx");
 
+    len = ft_strlen(argv[1]);
+  
+    if (len < 5 || ft_strcmp(&argv[1][len - 4], ".cub") != 0) {
+        printf("Invalid map name. The file must have a '.cub' extension.\n");
+        return (0);
+    }
 
-    data.win = mlx_new_window(data.mlx_ptr, WIN_WIDTH, WIN_HEIGHT, "cub3D");
+    return (1);
+}
 
-    parse_map(argv[1], &data);
-    render(&data);
+int	main(int argc, char **argv) {
+  t_game game;
 
-    mlx_hook(data.win, 17, 0, close_window, &data); // Close window on red cross click
-    mlx_loop(data.mlx_ptr);
+  if(check_input(argc, argv) != 1) 
+    return 0;
 
-    return (0);
+  ft_init_game(&game);
+  ft_parsing(argv[1], &game);
+  return 0;
 }

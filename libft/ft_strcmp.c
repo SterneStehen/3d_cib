@@ -1,32 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smoreron <smoreron@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/17 01:10:24 by smoreron          #+#    #+#             */
-/*   Updated: 2024/08/17 23:55:19 by smoreron         ###   ########.fr       */
+/*   Created: 2024/04/15 14:10:33 by smoreron          #+#    #+#             */
+/*   Updated: 2024/07/08 18:44:54 by smoreron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d.h"
+#include "libft.h"
 
-void	errmsg(t_data *data, const char *msg)
+int	ft_strcmp(char *s1, char *s2)
 {
-	if (msg)
-		printf("Error: %s\n", msg);
-	if (data->win)
-		mlx_destroy_window(data->mlx_ptr, data->win);
-	if (data->mlx_ptr)
-		mlx_destroy_display(data->mlx_ptr);
-	free(data->mlx_ptr);
+	int	i;
 
-	exit(EXIT_FAILURE);
-}
-void	errmsg_simle(const char *msg)
-{
-	if (msg)
-		printf("Error: %s\n", msg);
-	exit(EXIT_FAILURE);
+	i = 0;
+	while (s1[i] || s2[i])
+	{
+		if (s1[i] != s2[i])
+			return (0);
+		i++;
+	}
+	return (1);
 }
