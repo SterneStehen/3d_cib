@@ -6,11 +6,62 @@
 /*   By: smoreron <smoreron@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 21:01:20 by smoreron          #+#    #+#             */
-/*   Updated: 2024/08/17 01:24:06 by smoreron         ###   ########.fr       */
+/*   Updated: 2024/08/18 22:56:38 by smoreron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
+
+
+void	print_map(t_game *game) {
+  int i;
+  int j;
+
+  printf("Starting to print the map...\n");
+  if (!game || !game->level_map) {
+    printf("No map to display.\n");
+    return ;
+  }
+  printf("Map dimensions: height = %d, width = %d\n", game->mapHeight,
+         game->mapWidth);
+  for (i = 0; i < game->mapHeight; i++) {
+    if (!game->level_map[i]) // Проверка
+    {
+      printf("Row %d is not initialized.\n", i);
+      continue ;
+    }
+    for (j = 0; j < game->mapWidth; j++) {
+      printf("%c", game->level_map[i][j]);
+    }
+    printf("\n");
+  }
+  printf("Finished printing the map.\n");
+}
+
+void	print_game_info(t_game *game) {
+  if (!game) {
+    printf("No game data to display.\n");
+    return ;
+  }
+  // Печать разрешения экрана
+  printf("Resolution: %d x %d\n", game->resolut_width, game->resolut_height);
+  // Печать цветов пола и потолка
+  printf("Floor color: %d\n", game->floor_color);
+  printf("Ceiling color: %d\n", game->ceiling_color);
+  // Печать путей к текстурам
+  printf("North texture: %s\n",
+         game->north_texture ? game->north_texture : "Not set");
+  printf("South texture: %s\n",
+         game->south_texture ? game->south_texture : "Not set");
+  printf("East texture: %s\n",
+         game->east_texture ? game->east_texture : "Not set");
+  printf("West texture: %s\n",
+         game->west_texture ? game->west_texture : "Not set");
+  printf("Sprite texture: %s\n",
+         game->sprite_texture ? game->sprite_texture : "Not set");
+  // Печать карты
+  print_map(game);
+}
 
 int parse_color(char *line)
 {
@@ -42,55 +93,30 @@ int *parse_map_line(char *line, int width)
     }
     return (map_line);
 }
+void	parsing(char *input, t_game *game) {
+  int fd;
+  int ret;
+  char *line;
 
-void parse_map(const char *file, t_data *data)
-{
-    int		file_fd;
-	char	*line;
-    char *line = NULL;
-    size_t len = 0;
-    ssize_t read;
-
-    int map_started = 0;
-    int map_lines = 0;
-    int **map = NULL;
-    int map_width = 0;
-    
-    if (ft_strlen(file) < 5 \
-	|| ft_memcmp(".cub", file + ft_strlen(file) - 4, 5) != 0)
-        errmsg("filename id fail");
-    
-    file_fd = open(filename, O_RDONLY);
-	if (file_fd == -1)
-        errmsg("open");
-
-  
-
-    while ((read = getline(&line, &len, fp)) != -1)
-    {
-        if (line[0] == 'F')
-            data->floorColor = parse_color(line);
-        else if (line[0] == 'C')
-            data->ceilingColor = parse_color(line);
-        else if (strchr("012 NSEW", line[0]) != NULL)
-        {
-            if (!map_started)
-            {
-                map_started = 1;
-                map_width = strlen(line) - 1;
-                map = (int **)malloc(sizeof(int *) * (map_lines + 1));
-            }
-            map = (int **)realloc(map, sizeof(int *) * (map_lines + 1));
-            map[map_lines] = parse_map_line(line, map_width);
-            map_lines++;
-        }
-    }
-
-    data->worldMap = map;
-    data->mapWidth = map_width;
-    data->mapHeight = map_lines;
-
-    fclose(fp);
-    if (line)
-        free(line);
+  ret = 1;
+  line = NULL;
+  if ((fd = open(input, O_RDONLY)) == -1)
+    error_free(game, "wrong .cub \n");
+  game->error_code = 0;
+  while (ret != 0) {
+    ret = get_next_line(fd, &line, game);
+    if (game->error_code == 2)
+      error_free(game, "parsing map error\n");
+    //set_resolution(&line, game);
+    process_resolution(line, game);
+    set_color(&line, game);
+    set_texture(line, game);
+    set_map_dimensions(line, game);
+    free(line);
+  }
+  close(fd);
+  if (game->mapWidth == 0 || game->mapHeight == 0 || game->error_code == 2)
+    error_free(game, "Error map\n");
+  map_copy(input, game);
+  print_game_info(game);
 }
