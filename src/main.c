@@ -6,7 +6,7 @@
 /*   By: smoreron <smoreron@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 21:01:29 by smoreron          #+#    #+#             */
-/*   Updated: 2024/08/18 22:53:26 by smoreron         ###   ########.fr       */
+/*   Updated: 2024/08/19 15:34:18 by smoreron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	main(int argc, char **argv) {
   ft_init_game(&game);
   parsing(argv[1], &game);
   // ....
+  error_free(&game, "all pass");
   
   return (0);
 }

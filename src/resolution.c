@@ -6,7 +6,7 @@
 /*   By: smoreron <smoreron@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 20:40:35 by smoreron          #+#    #+#             */
-/*   Updated: 2024/08/18 22:58:52 by smoreron         ###   ########.fr       */
+/*   Updated: 2024/08/19 14:02:57 by smoreron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	is_char_in_str(char *str, char c)
 
 
 
-int	process_resolution(char *str, t_game *game)
+int	set_resolution(char *str, t_game *game)
 {
 	if (str[0] == 'R')
 	{
@@ -40,7 +40,9 @@ int	process_resolution(char *str, t_game *game)
 			game->error_code = 2;
 			return (0);
 		}
+
 		str++;
+
 		if (str[0] != ' ' || is_char_in_str(str, ',') == 1)
 		{
 			game->error_code = 2;
@@ -49,12 +51,17 @@ int	process_resolution(char *str, t_game *game)
 
 		while (*str == ' ')
 			str++;
+
 		game->resolut_width = atoi(str);
+
 		while (*str >= '0' && *str <= '9')
 			str++;
+
 		while (*str == ' ')
 			str++;
+
 		game->resolut_height = atoi(str);
+
 		if (game->resolut_width <= 0 || game->resolut_height <= 0)
 		{
 			game->error_code = 2;

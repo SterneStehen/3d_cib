@@ -6,7 +6,7 @@
 /*   By: smoreron <smoreron@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 21:01:20 by smoreron          #+#    #+#             */
-/*   Updated: 2024/08/18 22:56:38 by smoreron         ###   ########.fr       */
+/*   Updated: 2024/08/19 15:30:30 by smoreron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,12 @@ void	print_game_info(t_game *game) {
     printf("No game data to display.\n");
     return ;
   }
-  // Печать разрешения экрана
+ 
   printf("Resolution: %d x %d\n", game->resolut_width, game->resolut_height);
-  // Печать цветов пола и потолка
+ 
   printf("Floor color: %d\n", game->floor_color);
   printf("Ceiling color: %d\n", game->ceiling_color);
-  // Печать путей к текстурам
+  
   printf("North texture: %s\n",
          game->north_texture ? game->north_texture : "Not set");
   printf("South texture: %s\n",
@@ -63,12 +63,6 @@ void	print_game_info(t_game *game) {
   print_map(game);
 }
 
-int parse_color(char *line)
-{
-    int r, g, b;
-    sscanf(line, "%*c %d,%d,%d", &r, &g, &b);
-    return (r << 16 | g << 8 | b);
-}
 
 int *parse_map_line(char *line, int width)
 {
@@ -93,6 +87,7 @@ int *parse_map_line(char *line, int width)
     }
     return (map_line);
 }
+
 void	parsing(char *input, t_game *game) {
   int fd;
   int ret;
@@ -107,11 +102,10 @@ void	parsing(char *input, t_game *game) {
     ret = get_next_line(fd, &line, game);
     if (game->error_code == 2)
       error_free(game, "parsing map error\n");
-    //set_resolution(&line, game);
-    process_resolution(line, game);
-    set_color(&line, game);
+    set_resolution(line, game);
     set_texture(line, game);
     set_map_dimensions(line, game);
+    set_color(line, game);
     free(line);
   }
   close(fd);

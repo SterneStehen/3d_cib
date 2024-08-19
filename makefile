@@ -1,18 +1,17 @@
-# Имя исполняемого файла
-NAME := cub3D
 
-# Компилятор и флаги компиляции
+NAME := cub3d
+
+
 CC := gcc
 CFLAGS := -Wall -Wextra -Werror -I include
 
-# Директория с исходным кодом и директория для объектных файлов
 SRCDIR := src
 OBJDIR := obj
 
-# Заголовочные файлы
+
 INCLUDES := -I include
 
-# Автоматическое включение всех файлов .c из папки src
+
 SRCS := $(wildcard $(SRCDIR)/*.c)
 OBJS := $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 
@@ -20,34 +19,39 @@ OBJS := $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 LIBFT := ./minilibx-linux/libmlx.a
 
 # Флаги для линковки (для Linux)
+ifeq ($(UNAME), Linux)
 LDFLAGS := -Lminilibx-linux -lmlx -lm -lX11 -lXext
+endif
 
-# Основные цели
+# Флаги для линковки (для macOS)
+ifeq ($(UNAME), Darwin)
+LDFLAGS := -Lminilibx_macos -lmlx -lm
+endif
+
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT)
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
-# Правило для компиляции объектных файлов
 $(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
 	$(CC) $(CFLAGS) $(INCLUDES) -o $@ -c $<
 
-# Создание директории для объектных файлов
+
 $(OBJDIR):
 	mkdir -p $(OBJDIR)
 
-# Очистка объектных файлов
+
 clean:
 	rm -rf $(OBJDIR)
 
-# Полная очистка проекта
+
 fclean: clean
 	rm -f $(NAME)
 
-# Пересборка проекта
+
 re: fclean all
 
-# Правило для компиляции библиотеки MiniLibX
+
 $(LIBFT):
 	make -C minilibx-linux
 
