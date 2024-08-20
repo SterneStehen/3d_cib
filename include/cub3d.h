@@ -6,14 +6,21 @@
 /*   By: smoreron <smoreron@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 21:02:06 by smoreron          #+#    #+#             */
-/*   Updated: 2024/08/19 15:28:19 by smoreron         ###   ########.fr       */
+/*   Updated: 2024/08/20 16:27:58 by smoreron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
+//for linux
 //# include "../minilibx-linux/mlx.h"
+
+// for MacOs:
+// # include <../minilibx_opengl/mlx.h> 
+// # include <OpenGL/gl.h>
+// # include <OpenGL/glu.h> 
+
 # include <fcntl.h>
 # include <math.h>
 # include <stdio.h>
