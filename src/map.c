@@ -6,13 +6,56 @@
 /*   By: smoreron <smoreron@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 13:53:05 by smoreron          #+#    #+#             */
-/*   Updated: 2024/08/19 15:30:20 by smoreron         ###   ########.fr       */
+/*   Updated: 2024/08/20 17:48:23 by smoreron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
 
+int	validate_map_walls(t_game *data)
+{
+	int	i;
+	int ret = 1;
+
+	// Check if the map is empty
+	if (data->mapHeight == 0 || data->mapWidth == 0 || !data->level_map)
+		return (1); // Error: Map is empty or invalid
+
+	// Check the first and last column of each row for walls ('1')
+	i = 0;
+	while (i < data->mapHeight)
+	{
+		if (data->level_map[i][0] != '1' || data->level_map[i][data->mapWidth - 1] != '1')
+			return (ret); // Error: First or last column of a row is not a wall
+		i++;
+	}
+
+	// Check the first row for walls ('1')
+	i = 0;
+	while (data->level_map[0][i] != '\0')
+	{
+		if (data->level_map[0][i] != '1')
+			return (ret); // Error: First row is not completely walled
+		i++;
+	}
+
+	// Check the last row for walls ('1')
+	i = 0;
+	while (data->level_map[data->mapHeight - 1][i] != '\0')
+	{
+		if (data->level_map[data->mapHeight - 1][i] != '1')
+		{
+			return (ret); // Error: Last row is not completely walled
+		}
+		i++;
+	}
+	// If all checks pass, the map is correctly walled
+	ret = 0;
+	
+	printf("return = %d\n", ret);
+	return (ret); // Success: The map is fully surrounded by walls
+}
 
 int	map_duble(char *line, t_game *data)
 {
@@ -44,14 +87,14 @@ int	map_duble(char *line, t_game *data)
 }
 
 
-int	map_copy(char *input, t_game *game) {
+int	map_copy(char *intput, t_game *game) {
   int fd;
   int ret;
   char *line;
 
   ret = 1;
   line = NULL;
-  fd = open(input, O_RDONLY);
+  fd = open(intput, O_RDONLY);
   if (!(game->level_map = malloc(sizeof(char *) * game->mapHeight)))
     return (0);
   while (ret != 0) {
@@ -66,6 +109,8 @@ int	map_copy(char *input, t_game *game) {
     free(line);
   }
   close(fd);
+  if (validate_map_walls(game) == 1)
+    error_free(game, "Map not surrounded by 1s\n");
   return (0);
 }
 
