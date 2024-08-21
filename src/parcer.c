@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parcer.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoreron <smoreron@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: smoreron <7353718@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 21:01:20 by smoreron          #+#    #+#             */
-/*   Updated: 2024/08/19 15:30:30 by smoreron         ###   ########.fr       */
+/*   Updated: 2024/08/20 21:14:03 by smoreron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	print_game_info(t_game *game) {
          game->west_texture ? game->west_texture : "Not set");
   printf("Sprite texture: %s\n",
          game->sprite_texture ? game->sprite_texture : "Not set");
-  // Печать карты
+  // print card
   print_map(game);
 }
 

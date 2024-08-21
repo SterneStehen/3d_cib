@@ -16,22 +16,23 @@ SRCS := $(wildcard $(SRCDIR)/*.c)
 OBJS := $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 
 # Путь к библиотекам
-LIBFT := ./minilibx-linux/libmlx.a
+# LIBFT := ./minilibx-linux/libmlx.a
 
 # Флаги для линковки (для Linux)
-ifeq ($(UNAME), Linux)
-LDFLAGS := -Lminilibx-linux -lmlx -lm -lX11 -lXext
-endif
+# ifeq ($(UNAME), Linux)
+# LDFLAGS := -Lminilibx-linux -lmlx -lm -lX11 -lXext
+# endif
 
 # Флаги для линковки (для macOS)
-ifeq ($(UNAME), Darwin)
-LDFLAGS := -Lminilibx_macos -lmlx -lm
-endif
+# ifeq ($(UNAME), Darwin)
+# LDFLAGS := -Lminilibx_macos -lmlx -lm
+# endif
 
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT)
-	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
+	$(CC) $(CFLAGS) -o $@ $^ 
+# $(LDFLAGS)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
 	$(CC) $(CFLAGS) $(INCLUDES) -o $@ -c $<

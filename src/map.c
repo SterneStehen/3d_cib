@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoreron <smoreron@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: smoreron <7353718@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 13:53:05 by smoreron          #+#    #+#             */
-/*   Updated: 2024/08/20 17:48:23 by smoreron         ###   ########.fr       */
+/*   Updated: 2024/08/21 04:40:03 by smoreron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ int	map_duble(char *line, t_game *data)
 	{
 		if (init_start_posicion(line[j], data, i, j) == 1)
 			data->level_map[i][j] = '0';
-		else if (line[j] == ' ')
-			data->level_map[i][j] = '1';
+		// else if (line[j] == ' ')
+		// 	data->level_map[i][j] = '1';
 		else
 			data->level_map[i][j] = line[j];
 		j++;
@@ -99,7 +99,7 @@ int	map_copy(char *intput, t_game *game) {
     return (0);
   while (ret != 0) {
     ret = get_next_line(fd, &line, game);
-    if (game->inside_map == 1 && is_line_empty(line) == 0 &&
+    if (game->inside_map == 1  &&
         game->counter1 < game->mapHeight)
       game->empty_line = 1;
     if ((game->inside_map = audit_map(line, game)) == 1) {
@@ -109,8 +109,8 @@ int	map_copy(char *intput, t_game *game) {
     free(line);
   }
   close(fd);
-  if (validate_map_walls(game) == 1)
-    error_free(game, "Map not surrounded by 1s\n");
+//   if (validate_map_walls(game) == 1)
+//     error_free(game, "Map not surrounded by 1s\n");
   return (0);
 }
 
