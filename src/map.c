@@ -6,7 +6,7 @@
 /*   By: smoreron <7353718@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 13:53:05 by smoreron          #+#    #+#             */
-/*   Updated: 2024/08/21 04:40:03 by smoreron         ###   ########.fr       */
+/*   Updated: 2024/08/21 04:46:24 by smoreron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ int	audit_map(char *str, t_game *game)
 		if (str[i] == '1' || str[i] == '0')
 			contains_map_char = 1;
 		if (str[i] != ' ' && str[i] != '0' && str[i] != '1' && str[i] != '2'
-			&& str[i] != 'N' && str[i] != 'S' && str[i] != 'E' && str[i] != 'W'
+			&& str[i] != 'N' && str[i] != 'E' && str[i] != 'W'
 			&& str[i] != '\n' && str[i] != '\t')
 		{
 			if (game->inside_map == 1)
@@ -150,8 +150,7 @@ void	check_map_data(t_game *game)
 {
 	if (game->floor_color == -1 || game->ceiling_color == -1
 		|| game->north_texture == NULL || game->south_texture == NULL
-		|| game->west_texture == NULL || game->east_texture == NULL
-		|| game->sprite_texture == NULL)
+		|| game->west_texture == NULL || game->east_texture == NULL)
 	{
 		game->error_code = 2;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoreron <smoreron@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: smoreron <7353718@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 20:40:15 by smoreron          #+#    #+#             */
-/*   Updated: 2024/08/19 13:48:30 by smoreron         ###   ########.fr       */
+/*   Updated: 2024/08/21 04:45:54 by smoreron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,5 @@ void set_texture(char *line, t_game *game)
         game->west_texture = strdup(line + 3);
         if (!game->west_texture)
             error_free(game, "Memory allocation error for west texture\n");
-    }
-    else if (strncmp(line, "S ", 2) == 0)  
-    {
-        game->sprite_texture = strdup(line + 2);
-        if (!game->sprite_texture)
-            error_free(game, "Memory allocation error for sprite texture\n");
     }
 }

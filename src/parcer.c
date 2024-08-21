@@ -6,7 +6,7 @@
 /*   By: smoreron <7353718@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 21:01:20 by smoreron          #+#    #+#             */
-/*   Updated: 2024/08/20 21:14:03 by smoreron         ###   ########.fr       */
+/*   Updated: 2024/08/21 04:45:15 by smoreron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void	parsing(char *input, t_game *game) {
     ret = get_next_line(fd, &line, game);
     if (game->error_code == 2)
       error_free(game, "parsing map error\n");
-    set_resolution(line, game);
+    //set_resolution(line, game);
     set_texture(line, game);
     set_map_dimensions(line, game);
     set_color(line, game);

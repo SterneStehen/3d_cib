@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   color.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoreron <smoreron@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: smoreron <7353718@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 20:40:04 by smoreron          #+#    #+#             */
-/*   Updated: 2024/08/19 13:39:21 by smoreron         ###   ########.fr       */
+/*   Updated: 2024/08/21 04:49:15 by smoreron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,6 @@ void	set_color(char *line, t_game *game)
 	else if (line[0] == 'C')
 		game->ceiling_color = (r << 16) | (g << 8) | b;
 	
-	//int color = 16716830;
 
 	// int r = (color >> 16) & 0xFF;
 	// int g = (color >> 8) & 0xFF;

@@ -4,8 +4,7 @@ NO ./images/NO.xpm
 SO ./images/SO.xpm
 WE ./images/WE.xpm
 EA ./images/EA.xpm
-R  2147483647 2147483647
-S ./textures/ITEM.xpm
+
 F  255,15, 0
 C 8,143, 143
 
