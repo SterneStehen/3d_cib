@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoreron <smoreron@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: puiucorina <puiucorina@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 21:02:06 by smoreron          #+#    #+#             */
-/*   Updated: 2024/08/20 16:27:58 by smoreron         ###   ########.fr       */
+/*   Updated: 2024/08/21 11:57:39 by puiucorina       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # define WIN_HEIGHT 600
 # define TEX_WIDTH 64
 # define TEX_HEIGHT 64
+# define FOV 60
 
 # define BUFFER_SIZE 4096
 
@@ -61,6 +62,10 @@ typedef struct s_game
 	int			mapWidth;
 	int			posXp;
 	int			posYp;
+	double		pdirx;
+	double		pdiry;
+	double 		pplanex;
+	double		pplaney;
 	int			save;
 	int			viewport_width;
 	int			viewport_height;
