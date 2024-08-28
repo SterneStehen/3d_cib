@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoreron <7353718@gmail.com>               +#+  +:+       +#+        */
+/*   By: smoreron <smoreron@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 21:01:29 by smoreron          #+#    #+#             */
-/*   Updated: 2024/08/20 21:50:03 by smoreron         ###   ########.fr       */
+/*   Updated: 2024/08/28 16:28:08 by smoreron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,14 @@ int	main(int argc, char **argv) {
 
   if (check_input(argc, argv) != 1)
     return (0);
-  ft_init_game(&game);
+  game_init(&game);
   parsing(argv[1], &game);
+  // check_error(data);
+  sprite_start(&game);
+  
   // ....
   printf ("Floor color %x08\n", game.floor_color);
-  error_free(&game, "all pass");
+  error_free(&game, "all pass\n");
   
   return (0);
 }

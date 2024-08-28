@@ -6,7 +6,7 @@
 /*   By: smoreron <smoreron@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 21:02:06 by smoreron          #+#    #+#             */
-/*   Updated: 2024/08/20 16:27:58 by smoreron         ###   ########.fr       */
+/*   Updated: 2024/08/28 16:12:53 by smoreron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,23 +32,93 @@
 # define WIN_HEIGHT 600
 # define TEX_WIDTH 64
 # define TEX_HEIGHT 64
+# define FOV 60
+# define MAX_BUFFER_SIZE 1920
 
 # define BUFFER_SIZE 4096
 
 
 
+typedef struct s_point2D
+{
+	double		x;
+	double		y;
+} е_point2D;
+
+
+typedef struct s_player
+{
+	double		posX;
+	double		posY;
+	double		dirX;
+	double		dirY;
+	double		planX;
+	double		planY;
+	double		beam_dir_x;
+	double		beam_dir_y;
+	double		cameraX;
+	int			mapX;
+	int			mapY;
+	double		grid_x;
+	double		grid_y;
+	double		dist_to_side_x;
+	double		dist_to_side_y;
+	int			step_x;
+	int			step_y;
+	int			flag_hit;
+	int			collision_side;
+	double		perpwalldist;
+	int			wall_height_px;
+	int			begin_draw_px;
+	int			finish_draw_px;
+	double		move_speed;
+	double		rotation_speed;
+	int			x;
+	int			wall_texture;
+}				t_player;
+
+typedef struct s_sprite
+{
+	int			count;
+	int			projectedX;
+	int			entityHeight;
+	int			startX;
+	int			startY;
+	int			endY;
+	int			endX;
+	int			width;
+	int			*renderOrder;
+	double		*distance;
+	double		entityPosX;
+	double		entityPosY;
+	double		inverseDeterminant;
+	double		transX;
+	double		transY;
+	double		*depthBuffer;
+}				t_sprite;
+
+
 typedef struct s_data
 {
-
-	int		win_width;
-	int		win_height;
-	int		*buffer_pix;
-	int		*overlay_buffer;
-	void	*overlay_image;
-	void	*mlx_ptr;
-	void	*win;
-	void	*img;
-}			t_data;
+	int			bits_pix;
+	int			size_line;
+	int			byte_order;
+	int			move_ahed;
+	int			move_back;
+	int			move_left;
+	int			move_right;
+	int			left_rot;
+	int			right_rotet;
+	int			minimap_scale;
+	int			win_width;
+	int			win_height;
+	int			*buffer_pix;
+	int			*overlay_buffer;
+	void		*overlay_image;
+	void		*mlx_ptr;
+	void		*win;
+	void		*img;
+}				t_data;
 
 typedef struct s_game
 {
@@ -61,6 +131,10 @@ typedef struct s_game
 	int			mapWidth;
 	int			posXp;
 	int			posYp;
+	double		pdirx;
+	double		pdiry;
+	double 		pplanex;
+	double		pplaney;
 	int			save;
 	int			viewport_width;
 	int			viewport_height;
@@ -81,11 +155,14 @@ typedef struct s_game
 	char		start_dir;
 	t_data		surfaces[5];
 	t_data		render_data;
+	t_player	ray;
+	t_sprite	sprite_data;
+	е_point2D	*sprites_pos;
 }			t_game;
 
 
 //init 
-void	ft_init_game(t_game *game);
+void	game_init(t_game *game);
 int	init_start_posicion(char c, t_game *data, int i, int j);
 // parce
 void	parsing(char *input, t_game *game);
@@ -124,5 +201,9 @@ int			ft_strlen(char *str);
 char		*ft_substr(char const *s, unsigned int start, size_t len);
 char		*ft_strjoin(char *s1, char *s2);
 char		*ft_subbuff(char *buff, int start, int len);
+
+//sprit 
+void	init_pos_move(t_game *game);
+void	sprite_start(t_game *game);
 
 #endif

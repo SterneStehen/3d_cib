@@ -6,7 +6,7 @@
 /*   By: smoreron <smoreron@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 18:08:04 by smoreron          #+#    #+#             */
-/*   Updated: 2024/08/19 14:26:38 by smoreron         ###   ########.fr       */
+/*   Updated: 2024/08/28 16:27:39 by smoreron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	ft_init_data(t_data *data) {
   data->img = NULL;
 }
 
-void	ft_init_game(t_game *game) {
+void	game_init(t_game *game) {
 
   if (!game)
     return ;
@@ -76,4 +76,91 @@ void	ft_init_game(t_game *game) {
     i++;
   }
   ft_init_data(&game->render_data);
+}
+
+
+void	sprite_start(t_game *game) {
+    int row;
+    int col;
+    int sprite_count;
+
+    // Initialize the sprite count to zero
+    game->sprite_data.count = 0;
+
+    // Scan the map to count the sprites
+    for (row = 0; row < game->mapHeight; row++) {
+        for (col = 0; col < game->mapWidth; col++) {
+            if (game->level_map[row][col] == '2') {
+                game->sprite_data.count++;
+            }
+        }
+    }
+
+    // Allocate memory for sprite positions and related data
+    size_t sprite_count_size = game->sprite_data.count * sizeof(е_point2D);
+    game->sprites_pos = (е_point2D *)malloc(sprite_count_size);
+    if (!game->sprites_pos) {
+        error_free(game, "Failed to allocate memory for sprite positions");
+    }
+
+    game->sprite_data.renderOrder = (int *)malloc(game->sprite_data.count * sizeof(int));
+    if (!game->sprite_data.renderOrder) {
+        error_free(game, "Failed to allocate memory for render order");
+    }
+
+    game->sprite_data.distance = (double *)malloc(game->sprite_data.count * sizeof(double));
+    if (!game->sprite_data.distance) {
+        error_free(game, "Failed to allocate memory for sprite distances");
+    }
+
+    // Populate sprite positions
+    sprite_count = 0;
+    for (row = 0; row < game->mapHeight; row++) {
+        for (col = 0; col < game->mapWidth; col++) {
+            if (game->level_map[row][col] == '2') {
+                game->sprites_pos[sprite_count].x = row + 0.5;
+                game->sprites_pos[sprite_count].y = col + 0.5;
+                sprite_count++;
+            }
+        }
+    }
+}
+
+
+
+void	init_pos_move(t_game *game) {
+    // Memory allocation for depth buffer
+    if (!(game->sprite_data.depthBuffer = (double *)malloc(sizeof(double) * MAX_BUFFER_SIZE)))
+        exit(0);
+
+    // Initialization of movement parameters
+    game->render_data.move_ahed = 0;
+    game->render_data.move_back = 0;
+    game->render_data.move_left = 0;
+    game->render_data.move_right = 0;
+    game->render_data.right_rotet = 0;
+    game->render_data.left_rot = 0;
+
+    // Initialization of starting position and direction
+    game->ray.posX = (double)game->posXp + 0.5;
+    game->ray.posY = (double)game->posYp + 0.5;
+    game->ray.dirX = 0;
+    game->ray.dirY = 0;
+    game->ray.planX = 0;
+    game->ray.planY = 0;
+
+    // Setting initial direction and plane based on start direction
+    if (game->start_dir == 'N') {
+        game->ray.dirX = -1;
+        game->ray.planY = 0.5;
+    } else if (game->start_dir == 'S') {
+        game->ray.dirX = 1;
+        game->ray.planY = -0.5;
+    } else if (game->start_dir == 'E') {
+        game->ray.dirY = 1;
+        game->ray.planX = 0.5;
+    } else if (game->start_dir == 'W') {
+        game->ray.dirY = -1;
+        game->ray.planX = -0.5;
+    }
 }

@@ -3,15 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   parcer.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoreron <7353718@gmail.com>               +#+  +:+       +#+        */
+/*   By: smoreron <smoreron@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 21:01:20 by smoreron          #+#    #+#             */
-/*   Updated: 2024/08/21 04:45:15 by smoreron         ###   ########.fr       */
+/*   Updated: 2024/08/28 16:28:24 by smoreron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
+void	print_sprite_positions(t_game *game) {
+    int i;
+
+    if (!game || !game->sprite_data.count) {
+        printf("No sprites to display.\n");
+        return;
+    }
+
+    printf("Number of sprites: %d\n", game->sprite_data.count);
+    for (i = 0; i < game->sprite_data.count; i++) {
+        printf("Sprite %d: Position (x: %.2f, y: %.2f)\n",
+               i + 1,
+               game->sprites_pos[i].x,
+               game->sprites_pos[i].y);
+    }
+}
 
 void	print_map(t_game *game) {
   int i;
@@ -44,7 +60,7 @@ void	print_game_info(t_game *game) {
     return ;
   }
  
-  printf("Resolution: %d x %d\n", game->resolut_width, game->resolut_height);
+  //printf("Resolution: %d x %d\n", game->resolut_width, game->resolut_height);
  
   printf("Floor color: %d\n", game->floor_color);
   printf("Ceiling color: %d\n", game->ceiling_color);
@@ -61,6 +77,7 @@ void	print_game_info(t_game *game) {
          game->sprite_texture ? game->sprite_texture : "Not set");
   // print card
   print_map(game);
+  //print_sprite_positions(game);
 }
 
 
