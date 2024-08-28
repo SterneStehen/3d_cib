@@ -6,7 +6,7 @@
 /*   By: smoreron <smoreron@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 21:01:29 by smoreron          #+#    #+#             */
-/*   Updated: 2024/08/28 16:40:30 by smoreron         ###   ########.fr       */
+/*   Updated: 2024/08/29 00:55:34 by smoreron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	main(int argc, char **argv) {
   game_init(&game);
   parsing(argv[1], &game);
   // check_error(data);
-  sprite_start(&game);
+  //sprite_start(&game);
   run_mlx(&game);
   
   

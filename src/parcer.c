@@ -6,7 +6,7 @@
 /*   By: smoreron <smoreron@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 21:01:20 by smoreron          #+#    #+#             */
-/*   Updated: 2024/08/28 23:24:20 by smoreron         ###   ########.fr       */
+/*   Updated: 2024/08/29 00:51:31 by smoreron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,17 +91,17 @@ int *parse_map_line(char *line, int width)
 
 void	parsing(char *input, t_game *game) {
   int fd;
-  int ret;
+  int result;
   char *line;
 
-  ret = 1;
+  result = 1;
   line = NULL;
   if ((fd = open(input, O_RDONLY)) == -1)
     error_free(game, "wrong .cub \n");
   game->error_code = 0;
-  while (ret != 0) {
-    ret = get_next_line(fd, &line, game);
-    if (game->error_code == 2)
+  while (result != 0) {
+    result = get_next_line(fd, &line);
+    if (game->error_code == -1)
       error_free(game, "parsing map error\n");
     //set_resolution(line, game);
     set_texture(line, game);
@@ -110,7 +110,7 @@ void	parsing(char *input, t_game *game) {
     free(line);
   }
   close(fd);
-  if (game->mapWidth == 0 || game->mapHeight == 0 || game->error_code == 2)
+  if (game->mapWidth == 0 || game->mapHeight == 0 || game->error_code < 0)
     error_free(game, "Error map\n");
   map_copy(input, game);
   print_game_info(game);

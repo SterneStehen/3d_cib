@@ -6,7 +6,7 @@
 /*   By: smoreron <smoreron@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 21:02:06 by smoreron          #+#    #+#             */
-/*   Updated: 2024/08/28 22:37:53 by smoreron         ###   ########.fr       */
+/*   Updated: 2024/08/29 00:42:50 by smoreron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,7 +199,7 @@ void set_texture(char *line, t_game *game);
 
 //util
 int	is_line_empty(char *str);
-void	errmsg(t_data *data, const char *msg);
+//void	errmsg(t_data *data, const char *msg);
 
 //clean
 void	error_free(t_game *data, char *str);
@@ -207,7 +207,7 @@ int	destroy(t_game *game);
 
 
 //get_next
-int		get_next_line(int fd, char **line, t_game *game);
+int		get_next_line(int fd, char **line);
 int			ft_strlen(char *str);
 char		*ft_substr(char const *s, unsigned int start, size_t len);
 char		*ft_strjoin(char *s1, char *s2);

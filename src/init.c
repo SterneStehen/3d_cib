@@ -6,7 +6,7 @@
 /*   By: smoreron <smoreron@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 18:08:04 by smoreron          #+#    #+#             */
-/*   Updated: 2024/08/28 21:46:39 by smoreron         ###   ########.fr       */
+/*   Updated: 2024/08/29 00:26:45 by smoreron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,24 @@ int	init_start_posicion(char c, t_game *data, int i, int j)
 }
 
 
-void	ft_init_data(t_data *data) {
+void	data_init(t_data *data) 
+{
   if (!data)
     return ;
 
-  
+  data->bits_pix = 0;
+  data->size_line = 0;
+  data->byte_order = 0;
+  data->move_ahed = 0;
+  data->move_back = 0;
+  data->move_left = 0;
+  data->move_right = 0;
+  data->left_rot = 0;
+  data->right_rotet = 0;
+  data->minimap_scale = 0;
+  data->win_width = 0;
+  data->win_height = 0;
+
   data->buffer_pix = NULL;
   data->overlay_buffer = NULL;
   data->overlay_image = NULL;
@@ -45,8 +58,8 @@ void	game_init(t_game *game) {
   if (!game)
     return ;
 
-  game->resolut_width = 0;
-  game->resolut_height = 0;
+  game->resolut_width = 9999;
+  game->resolut_height = 9999;
   game->i = 0;
   game->floor_color =
       -1; 
@@ -69,13 +82,15 @@ void	game_init(t_game *game) {
   game->west_texture = NULL;
   game->east_texture = NULL;
   game->sprite_texture = NULL;
+  game->render_data.img = NULL;
+  game->render_data.win = NULL;
 
   int i = 0;
   while (i < 4) {
-    ft_init_data(&game->surfaces[i]);
+    data_init(&game->surfaces[i]);
     i++;
   }
-  ft_init_data(&game->render_data);
+  data_init(&game->render_data);
 }
 
 

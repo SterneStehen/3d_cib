@@ -6,7 +6,7 @@
 /*   By: smoreron <smoreron@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 13:53:05 by smoreron          #+#    #+#             */
-/*   Updated: 2024/08/28 22:37:02 by smoreron         ###   ########.fr       */
+/*   Updated: 2024/08/29 00:51:44 by smoreron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,15 +98,18 @@ int	map_copy(char *intput, t_game *game) {
   if (!(game->level_map = malloc(sizeof(char *) * game->mapHeight)))
     return (0);
   while (ret != 0) {
-    ret = get_next_line(fd, &line, game);
+    ret = get_next_line(fd, &line);
     if (game->inside_map == 1  &&
         game->counter1 < game->mapHeight)
       game->empty_line = 1;
-    if ((game->inside_map = audit_map(line, game)) == 1) {
+    if ((game->inside_map = audit_map(line, game)) == 1) 
+	{
       game->counter1++;
       map_duble(line, game);
     }
     free(line);
+	if (game->error_code == -1)
+      error_free(game, "parsing map error\n");
   }
   close(fd);
 //   if (validate_map_walls(game) == 1)
@@ -114,37 +117,89 @@ int	map_copy(char *intput, t_game *game) {
   return (0);
 }
 
-
-int	audit_map(char *str, t_game *game)
+int audit_map(char *str, t_game *game)
 {
-	int	i;
-	int	contains_map_char;
+    int i;
+    int contains_map_char;
 
-	i = 0;
-	contains_map_char = 0;
-	if (!str)
-		return (0);
-	while (str[i] != '\0')
-	{
-		if (str[i] == '1' || str[i] == '0')
-			contains_map_char = 1;
-		if (str[i] != ' ' && str[i] != '0' && str[i] != '1' && str[i] != '2'
-			&& str[i] != 'N' && str[i] != 'E' && str[i] != 'W'
-			&& str[i] != '\n' && str[i] != '\t')
-		{
-			if (game->inside_map == 1)
-			{
-				game->invalid_chars = 2;
-				printf("Invalid character in the map\n");
-			}
-			return (0);
-		}
-		i++;
-	}
-	if (contains_map_char)
-		return (1);
-	return (0);
+    i = 0;
+    contains_map_char = 0;
+
+    // Проверка на пустую строку
+    if (!str)
+        return (0);
+
+    // Проход по каждому символу строки
+    while (str[i] != '\0')
+    {
+        // Проверка наличия символов карты '1' или '0'
+        if (str[i] == '1' || str[i] == '0')
+            contains_map_char = 1;
+
+        // Проверка на недопустимые символы
+        if (str[i] != ' ' && str[i] != '0' && str[i] != '1' && str[i] != '2'
+            && str[i] != 'N' && str[i] != 'E' && str[i] != 'W' && str[i] != 'S'
+            && str[i] != '\n' && str[i] != '\t')
+        {
+            // Если находимся внутри карты и символ недопустимый
+            if (game->inside_map == 1)
+            {
+                game->error_code = -1;
+                printf("Invalid character '%c' in the map at position %d\n", str[i], i);
+            	//error_free(game, "Error: Invalid character in the map. Exiting...\n");
+            }
+            // Если недопустимый символ найден до начала карты, просто возвращаем 0
+            return (0);
+        }
+        i++;
+    }
+
+    // Если строка содержит символы карты, возвращаем 1
+    if (contains_map_char)
+        return (1);
+
+    // Если строка не содержит символов карты, завершить с ошибкой
+    if (game->inside_map == 1)
+    {
+        game->error_code = -1;
+		printf("Error: Map does not contain any valid map characters\n");
+        //error_free(game, "Error: Invalid map format. Exiting...\n");
+    }
+
+    return (0);
 }
+
+
+// int	audit_map(char *str, t_game *game)
+// {
+// 	int	i;
+// 	int	contains_map_char;
+
+// 	i = 0;
+// 	contains_map_char = 0;
+// 	if (!str)
+// 		return (0);
+// 	while (str[i] != '\0')
+// 	{
+// 		if (str[i] == '1' || str[i] == '0')
+// 			contains_map_char = 1;
+// 		if (str[i] != ' ' && str[i] != '0' && str[i] != '1' && str[i] != '2'
+// 			&& str[i] != 'N' && str[i] != 'E' && str[i] != 'W' && str[i] != 'S'
+// 			&& str[i] != '\n' && str[i] != '\t')
+// 		{
+// 			if (game->inside_map == 1)
+// 			{
+// 				game->invalid_chars = 2;
+// 				printf("Invalid character in the map\n");
+// 			}
+// 			return (0);
+// 		}
+// 		i++;
+// 	}
+// 	if (contains_map_char)
+// 		return (1);
+// 	return (0);
+// }
 
 void	check_map_data(t_game *game)
 {
@@ -152,7 +207,7 @@ void	check_map_data(t_game *game)
 		|| game->north_texture == NULL || game->south_texture == NULL
 		|| game->west_texture == NULL || game->east_texture == NULL)
 	{
-		game->error_code = 2;
+		game->invalid_chars = -1;
 	}
 }
 

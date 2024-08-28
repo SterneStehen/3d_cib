@@ -6,14 +6,14 @@
 /*   By: smoreron <smoreron@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:49:54 by smoreron          #+#    #+#             */
-/*   Updated: 2024/08/19 15:27:57 by smoreron         ###   ########.fr       */
+/*   Updated: 2024/08/29 00:41:58 by smoreron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../include/cub3d.h"
 
-int get_next_line(int fd, char **line, t_game *game)
+int get_next_line(int fd, char **line)
 {
     static char *buff = NULL;
 
@@ -23,11 +23,11 @@ int get_next_line(int fd, char **line, t_game *game)
     int begin;
 
 
-    if (game->error_code == 2 && buff)
-    {
-        free(buff);
-        return 0;
-    }
+    // if (game->error_code == -1 && buff)
+    // {
+    //     free(buff);
+    //     return 0;
+    // }
 
 
     if (fd < 0 || BUFFER_SIZE <= 0 || !line)
