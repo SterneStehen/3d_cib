@@ -6,7 +6,7 @@
 /*   By: smoreron <smoreron@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 21:02:06 by smoreron          #+#    #+#             */
-/*   Updated: 2024/08/28 16:12:53 by smoreron         ###   ########.fr       */
+/*   Updated: 2024/08/28 16:44:22 by smoreron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,7 +203,11 @@ char		*ft_strjoin(char *s1, char *s2);
 char		*ft_subbuff(char *buff, int start, int len);
 
 //sprit 
+
 void	init_pos_move(t_game *game);
 void	sprite_start(t_game *game);
+
+//mlx 
+int	run_mlx(t_game *game);
 
 #endif

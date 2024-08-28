@@ -6,7 +6,7 @@
 /*   By: smoreron <smoreron@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 18:08:04 by smoreron          #+#    #+#             */
-/*   Updated: 2024/08/28 16:27:39 by smoreron         ###   ########.fr       */
+/*   Updated: 2024/08/28 16:46:09 by smoreron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ void	sprite_start(t_game *game) {
             }
         }
     }
+    init_pos_move(game);
 }
 
 

@@ -6,7 +6,7 @@
 /*   By: smoreron <smoreron@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 21:01:29 by smoreron          #+#    #+#             */
-/*   Updated: 2024/08/28 16:28:08 by smoreron         ###   ########.fr       */
+/*   Updated: 2024/08/28 16:40:30 by smoreron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ int	main(int argc, char **argv) {
   parsing(argv[1], &game);
   // check_error(data);
   sprite_start(&game);
+  run_mlx(&game);
+  
   
   // ....
   printf ("Floor color %x08\n", game.floor_color);
