@@ -6,7 +6,7 @@
 /*   By: smoreron <smoreron@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 18:08:04 by smoreron          #+#    #+#             */
-/*   Updated: 2024/08/28 16:46:09 by smoreron         ###   ########.fr       */
+/*   Updated: 2024/08/28 21:46:39 by smoreron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	game_init(t_game *game) {
   game->sprite_texture = NULL;
 
   int i = 0;
-  while (i < 5) {
+  while (i < 4) {
     ft_init_data(&game->surfaces[i]);
     i++;
   }

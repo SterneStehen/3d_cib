@@ -6,7 +6,7 @@
 /*   By: smoreron <smoreron@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 21:02:06 by smoreron          #+#    #+#             */
-/*   Updated: 2024/08/28 16:44:22 by smoreron         ###   ########.fr       */
+/*   Updated: 2024/08/28 22:37:53 by smoreron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define CUB3D_H
 
 //for linux
-//# include "../minilibx-linux/mlx.h"
+# include "../minilibx-linux/mlx.h"
 
 // for MacOs:
 // # include <../minilibx_opengl/mlx.h> 
@@ -45,6 +45,15 @@ typedef struct s_point2D
 	double		y;
 } е_point2D;
 
+typedef struct s_material
+{
+	int			dir;
+	double		wallHitX;
+	int			coordX;
+	int			coordY;
+	double		step;
+	double		position;
+}				t_material;
 
 typedef struct s_player
 {
@@ -158,6 +167,7 @@ typedef struct s_game
 	t_player	ray;
 	t_sprite	sprite_data;
 	е_point2D	*sprites_pos;
+	t_material material_data;
 }			t_game;
 
 
@@ -193,6 +203,7 @@ void	errmsg(t_data *data, const char *msg);
 
 //clean
 void	error_free(t_game *data, char *str);
+int	destroy(t_game *game);
 
 
 //get_next
@@ -209,5 +220,15 @@ void	sprite_start(t_game *game);
 
 //mlx 
 int	run_mlx(t_game *game);
+int	execute_raycasting(t_game *recup);
+void	texture_run(t_game *game);
+void	draw_wall(t_game *game);
+int	textur_color(t_game *game);
+
+
+//move
+int	press_key(int input, t_game *game);
+void funk_A_D(t_game *game);
+int	input_keyboard(int sense, t_game *game);
 
 #endif
