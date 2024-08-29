@@ -6,7 +6,7 @@
 /*   By: smoreron <smoreron@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 18:08:04 by smoreron          #+#    #+#             */
-/*   Updated: 2024/08/29 00:26:45 by smoreron         ###   ########.fr       */
+/*   Updated: 2024/08/29 01:26:38 by smoreron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,60 +94,60 @@ void	game_init(t_game *game) {
 }
 
 
-void	sprite_start(t_game *game) {
-    int row;
-    int col;
-    int sprite_count;
+// void	sprite_start(t_game *game) {
+//     int row;
+//     int col;
+//     int sprite_count;
 
-    // Initialize the sprite count to zero
-    game->sprite_data.count = 0;
+//     // Initialize the sprite count to zero
+//     game->sprite_data.count = 0;
 
-    // Scan the map to count the sprites
-    for (row = 0; row < game->mapHeight; row++) {
-        for (col = 0; col < game->mapWidth; col++) {
-            if (game->level_map[row][col] == '2') {
-                game->sprite_data.count++;
-            }
-        }
-    }
+//     // Scan the map to count the sprites
+//     for (row = 0; row < game->mapHeight; row++) {
+//         for (col = 0; col < game->mapWidth; col++) {
+//             if (game->level_map[row][col] == '2') {
+//                 game->sprite_data.count++;
+//             }
+//         }
+//     }
 
-    // Allocate memory for sprite positions and related data
-    size_t sprite_count_size = game->sprite_data.count * sizeof(е_point2D);
-    game->sprites_pos = (е_point2D *)malloc(sprite_count_size);
-    if (!game->sprites_pos) {
-        error_free(game, "Failed to allocate memory for sprite positions");
-    }
+//     // Allocate memory for sprite positions and related data
+//     size_t sprite_count_size = game->sprite_data.count * sizeof(е_point2D);
+//     game->sprites_pos = (е_point2D *)malloc(sprite_count_size);
+//     if (!game->sprites_pos) {
+//         error_free(game, "Failed to allocate memory for sprite positions");
+//     }
 
-    game->sprite_data.renderOrder = (int *)malloc(game->sprite_data.count * sizeof(int));
-    if (!game->sprite_data.renderOrder) {
-        error_free(game, "Failed to allocate memory for render order");
-    }
+//     game->sprite_data.renderOrder = (int *)malloc(game->sprite_data.count * sizeof(int));
+//     if (!game->sprite_data.renderOrder) {
+//         error_free(game, "Failed to allocate memory for render order");
+//     }
 
-    game->sprite_data.distance = (double *)malloc(game->sprite_data.count * sizeof(double));
-    if (!game->sprite_data.distance) {
-        error_free(game, "Failed to allocate memory for sprite distances");
-    }
+//     game->sprite_data.distance = (double *)malloc(game->sprite_data.count * sizeof(double));
+//     if (!game->sprite_data.distance) {
+//         error_free(game, "Failed to allocate memory for sprite distances");
+//     }
 
-    // Populate sprite positions
-    sprite_count = 0;
-    for (row = 0; row < game->mapHeight; row++) {
-        for (col = 0; col < game->mapWidth; col++) {
-            if (game->level_map[row][col] == '2') {
-                game->sprites_pos[sprite_count].x = row + 0.5;
-                game->sprites_pos[sprite_count].y = col + 0.5;
-                sprite_count++;
-            }
-        }
-    }
-    init_pos_move(game);
-}
+//     // Populate sprite positions
+//     sprite_count = 0;
+//     for (row = 0; row < game->mapHeight; row++) {
+//         for (col = 0; col < game->mapWidth; col++) {
+//             if (game->level_map[row][col] == '2') {
+//                 game->sprites_pos[sprite_count].x = row + 0.5;
+//                 game->sprites_pos[sprite_count].y = col + 0.5;
+//                 sprite_count++;
+//             }
+//         }
+//     }
+//     init_pos_move(game);
+// }
 
 
 
 void	init_pos_move(t_game *game) {
     // Memory allocation for depth buffer
-    if (!(game->sprite_data.depthBuffer = (double *)malloc(sizeof(double) * MAX_BUFFER_SIZE)))
-        exit(0);
+    // if (!(game->sprite_data.depthBuffer = (double *)malloc(sizeof(double) * MAX_BUFFER_SIZE)))
+    //     exit(0);
 
     // Initialization of movement parameters
     game->render_data.move_ahed = 0;

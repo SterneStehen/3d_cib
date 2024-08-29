@@ -6,7 +6,7 @@
 /*   By: smoreron <smoreron@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 20:40:15 by smoreron          #+#    #+#             */
-/*   Updated: 2024/08/28 21:48:14 by smoreron         ###   ########.fr       */
+/*   Updated: 2024/08/29 01:36:58 by smoreron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ void	texture_run(t_game *game) {
         &(game->surfaces[i].win_width), &(game->surfaces[i].win_height));
 
     // Проверка на ошибки загрузки текстуры
-    if (!game->surfaces[i].img) {
+    if (!game->surfaces[i].img) 
+    {
       error_free(game, texture_names[i]);
     }
 

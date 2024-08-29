@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoreron <7353718@gmail.com>               +#+  +:+       +#+        */
+/*   By: smoreron <smoreron@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 01:10:24 by smoreron          #+#    #+#             */
-/*   Updated: 2024/08/21 04:36:55 by smoreron         ###   ########.fr       */
+/*   Updated: 2024/08/29 01:36:35 by smoreron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	is_line_empty(char *str)
 {
 	int	index;
-
+	
 	index = 0;
 	while (str[index])
 	{
@@ -33,9 +33,9 @@ int	is_line_empty(char *str)
 
 
 
-void	errmsg_simle(const char *msg)
-{
-	if (msg)
-		printf("Error: %s\n", msg);
-	exit(EXIT_FAILURE);
-}
+// void	errmsg_simle(const char *msg)
+// {
+// 	if (msg)
+// 		printf("Error: %s\n", msg);
+// 	exit(EXIT_FAILURE);
+// }

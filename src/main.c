@@ -6,13 +6,12 @@
 /*   By: smoreron <smoreron@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 21:01:29 by smoreron          #+#    #+#             */
-/*   Updated: 2024/08/29 00:55:34 by smoreron         ###   ########.fr       */
+/*   Updated: 2024/08/29 07:15:36 by smoreron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../include/cub3d.h"
-
 
 int	check_input(int argc, char **argv) {
   int len;

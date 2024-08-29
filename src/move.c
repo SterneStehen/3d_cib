@@ -6,12 +6,11 @@
 /*   By: smoreron <smoreron@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 21:51:50 by smoreron          #+#    #+#             */
-/*   Updated: 2024/08/28 22:26:53 by smoreron         ###   ########.fr       */
+/*   Updated: 2024/08/29 07:15:17 by smoreron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../include/cub3d.h"
-
 
 int	input_keyboard(int sense, t_game *game)
 {
@@ -79,3 +78,91 @@ void funk_A_D(t_game *game) {
     }
 }
 
+void	funk_W_S(t_game *game)
+{
+	// Move forward
+	if (game->render_data.move_ahed)
+	{
+		// Calculate potential new positions based on the current direction and speed
+		double newPosX = game->ray.posX + game->ray.dirX * game->ray.move_speed * 2;
+		double newPosY = game->ray.posY + game->ray.dirY * game->ray.move_speed * 2;
+
+		// Check if the next position on the X-axis is within the map and not a wall
+		if (game->level_map[(int)newPosX][(int)game->ray.posY] == '0')
+			game->ray.posX += game->ray.dirX * game->ray.move_speed;
+
+		// Check if the next position on the Y-axis is within the map and not a wall
+		if (game->level_map[(int)game->ray.posX][(int)newPosY] == '0')
+			game->ray.posY += game->ray.dirY * game->ray.move_speed;
+	}
+
+	// Move backward
+	if (game->render_data.move_back)
+	{
+		// Calculate potential new positions based on the current direction and speed
+		double newPosX = game->ray.posX - game->ray.dirX * game->ray.move_speed * 2;
+		double newPosY = game->ray.posY - game->ray.dirY * game->ray.move_speed * 2;
+
+		// Check if the next position on the X-axis is within the map and not a wall
+		if (game->level_map[(int)newPosX][(int)game->ray.posY] == '0')
+			game->ray.posX -= game->ray.dirX * game->ray.move_speed;
+
+		// Check if the next position on the Y-axis is within the map and not a wall
+		if (game->level_map[(int)game->ray.posX][(int)newPosY] == '0')
+			game->ray.posY -= game->ray.dirY * game->ray.move_speed;
+	}
+}
+
+
+void	funk_left_right(t_game *game)
+{
+	double	previos_X;
+	double	previos_direct_X;
+	double	rotation_angle;
+
+	previos_X = game->ray.planX;
+	previos_direct_X = game->ray.dirX;
+
+	// Check if either left or right rotation is triggered
+	if (game->render_data.right_rotet == 1 || game->render_data.left_rot == 1)
+	{
+		// Set the rotation angle based on direction
+		if (game->render_data.right_rotet == 1)
+			rotation_angle = -game->ray.rotation_speed / 2; // Rotate right
+		else
+			rotation_angle = game->ray.rotation_speed / 2;  // Rotate left
+
+		// Calculate new direction vector
+		game->ray.dirX = game->ray.dirX * cos(rotation_angle)
+			- game->ray.dirY * sin(rotation_angle);
+		game->ray.dirY = previos_direct_X * sin(rotation_angle)
+			+ game->ray.dirY * cos(rotation_angle);
+
+		// Calculate new plane vector for camera
+		game->ray.planX = game->ray.planX * cos(rotation_angle)
+			- game->ray.planY * sin(rotation_angle);
+		game->ray.planY = previos_X * sin(rotation_angle)
+			+ game->ray.planY * cos(rotation_angle);
+	}
+}
+
+void	swap_images(t_game *game)
+{
+	// Temporary variables to hold current image and buffer data
+	void	*temp_image;
+	int		*temp_buffer;
+
+	// Swapping the main rendering image with the overlay image
+	temp_image = game->render_data.img;
+	game->render_data.img = game->render_data.overlay_image;
+	game->render_data.overlay_image = temp_image;
+
+	// Swapping the main buffer with the overlay buffer
+	temp_buffer = game->render_data.buffer_pix;
+	game->render_data.buffer_pix = game->render_data.overlay_buffer;
+	game->render_data.overlay_buffer = temp_buffer;
+
+	// Logging to track image swapping
+	printf("Swapped main image with overlay image.\n");
+	printf("Swapped main buffer with overlay buffer.\n");
+}

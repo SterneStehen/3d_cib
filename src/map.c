@@ -6,12 +6,11 @@
 /*   By: smoreron <smoreron@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 13:53:05 by smoreron          #+#    #+#             */
-/*   Updated: 2024/08/29 00:51:44 by smoreron         ###   ########.fr       */
+/*   Updated: 2024/08/29 07:15:22 by smoreron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
-
 
 int	validate_map_walls(t_game *data)
 {
