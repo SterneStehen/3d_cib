@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoreron <smoreron@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: smoreron <7353718@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 18:47:42 by smoreron          #+#    #+#             */
-/*   Updated: 2024/07/08 18:49:40 by smoreron         ###   ########.fr       */
+/*   Updated: 2024/09/04 00:50:16 by smoreron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
-# include "get_next_line.h"
+
 # include <stddef.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -35,7 +35,8 @@ typedef struct t_list
 long				ft_atoi(const char *nptr);
 int					ft_memcmp(const void *s1, const void *s2, size_t n);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
-int					ft_strcmp(char *s1, char *s2);
+//int					ft_strcmp(char *s1, char *s2);
+int ft_strcmp(const char *s1, const char *s2);
 int					ft_tolower(int c);
 int					ft_toupper(int c);
 int					ft_lstsize(t_list *lst);
@@ -50,14 +51,14 @@ char				*ft_strchr(const char *s, int c);
 char				*ft_strnstr(const char *haystack, const char *needle,
 						size_t len);
 char				*ft_strchr(const char *s, int c);
-char				*ft_strjoin(char const *s1, char const *s2);
+//char				*ft_strjoin(char const *s1, char const *s2);
 char				*ft_cut(char const *s1, char const *set);
 char				**ft_split(char const *s, char c);
 char				*ft_substr(char const *s, unsigned int start, size_t len);
 char				*ft_itoa(int n);
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 
-size_t				ft_strlen(const char *str);
+//size_t				ft_strlen(const char *str);
 size_t				ft_strlcat(char *dst, const char *src, size_t size);
 size_t				ft_strlcpy(char *dst, const char *src, size_t l);
 

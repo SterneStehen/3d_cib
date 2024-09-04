@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_util.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoreron <smoreron@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: smoreron <7353718@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:50:01 by smoreron          #+#    #+#             */
-/*   Updated: 2024/08/19 15:26:13 by smoreron         ###   ########.fr       */
+/*   Updated: 2024/09/04 00:50:04 by smoreron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-char		*ft_subbuff(char *buffer, int begin, int len)
+char	*ft_subbuff(char *buffer, int begin, int len)
 {
 	int		i;
 	char	*tmp;
@@ -31,10 +31,9 @@ char		*ft_subbuff(char *buffer, int begin, int len)
 	return (buffer);
 }
 
-
-int			ft_strlen(char *str)
+int	ft_strlen(char *str)
 {
-	int			ind;
+	int	ind;
 
 	ind = 0;
 	if (!str)
@@ -44,7 +43,7 @@ int			ft_strlen(char *str)
 	return (ind);
 }
 
-char		*ft_substr(char const *s, unsigned int begin, size_t len)
+char	*ft_substr(char const *s, unsigned int begin, size_t len)
 {
 	char	*resul;
 	size_t	ind;
@@ -64,13 +63,14 @@ char		*ft_substr(char const *s, unsigned int begin, size_t len)
 	return (resul);
 }
 
-char		*ft_strjoin(char *str1, char *str2)
+char	*ft_strjoin(char *str1, char *str2)
 {
 	char	*resul;
 	int		i;
 	int		j;
 
-	if (!(resul = malloc(sizeof(char) * (ft_strlen(str1) + ft_strlen(str2) + 1))))
+	resul = malloc(sizeof(char) * (ft_strlen(str1) + ft_strlen(str2) + 1));
+	if (!resul)
 		return (NULL);
 	i = 0;
 	while (str1 && str1[i])
@@ -89,3 +89,16 @@ char		*ft_strjoin(char *str1, char *str2)
 	return (resul);
 }
 
+int ft_strcmp(const char *s1, const char *s2) 
+{
+    int i = 0;
+
+    while (s1[i] != '\0' && s2[i] != '\0') {
+        if (s1[i] != s2[i]) {
+            return (unsigned char)s1[i] - (unsigned char)s2[i];
+        }
+        i++;
+    }
+
+    return (unsigned char)s1[i] - (unsigned char)s2[i];
+}

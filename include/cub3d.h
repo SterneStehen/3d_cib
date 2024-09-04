@@ -3,30 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoreron <smoreron@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: cpuiu <cpuiu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 21:02:06 by smoreron          #+#    #+#             */
-/*   Updated: 2024/08/29 01:23:33 by smoreron         ###   ########.fr       */
+/*   Updated: 2024/09/04 14:05:27 by cpuiu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-//for linux
-# include "../minilibx-linux/mlx.h"
+// for linux
+// # include "../minilibx-linux/mlx.h"
 
 // for MacOs:
-// # include <../minilibx_opengl/mlx.h> 
-// # include <OpenGL/gl.h>
-// # include <OpenGL/glu.h> 
-
+# include "../minilibx_opengl/mlx.h"
+# include <OpenGL/gl.h>
+# include <OpenGL/glu.h>
 # include <fcntl.h>
 # include <math.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
+# include <stdbool.h>
+//# include "../libft/libft.h"
 
 # define WIN_WIDTH 800
 # define WIN_HEIGHT 600
@@ -36,8 +37,6 @@
 # define MAX_BUFFER_SIZE 1920
 
 # define BUFFER_SIZE 4096
-
-
 
 typedef struct s_point2D
 {
@@ -57,10 +56,10 @@ typedef struct s_material
 
 typedef struct s_player
 {
-	double		posX;
-	double		posY;
+	double		pos_x;
+	double		pos_y;
 	double		dirX;
-	double		dirY;
+	double		dir_y;
 	double		planX;
 	double		planY;
 	double		beam_dir_x;
@@ -85,27 +84,6 @@ typedef struct s_player
 	int			x;
 	int			wall_texture;
 }				t_player;
-
-// typedef struct s_sprite
-// {
-// 	int			count;
-// 	int			projectedX;
-// 	int			entityHeight;
-// 	int			startX;
-// 	int			startY;
-// 	int			endY;
-// 	int			endX;
-// 	int			width;
-// 	int			*renderOrder;
-// 	double		*distance;
-// 	double		entityPosX;
-// 	double		entityPosY;
-// 	double		inverseDeterminant;
-// 	double		transX;
-// 	double		transY;
-// 	double		*depthBuffer;
-// }				t_sprite;
-
 
 typedef struct s_data
 {
@@ -138,12 +116,10 @@ typedef struct s_game
 	int			ceiling_color;
 	int			mapHeight;
 	int			mapWidth;
-	int			posXp;
-	int			posYp;
+	int			pos_xp;
+	int			pos_yp;
 	double		pdirx;
-	double		pdiry;
-	// double 		pplanex;
-	// double		pplaney;
+	double		pdir_y;
 	int			save;
 	int			viewport_width;
 	int			viewport_height;
@@ -153,8 +129,8 @@ typedef struct s_game
 	int			inside_map;
 	int			total_sum;
 	int			invalid_chars;
-	int counter1;
-	// int counter2;
+	int			counter1;
+	int			texture_audit[4];
 	char		*north_texture;
 	char		*south_texture;
 	char		*west_texture;
@@ -165,75 +141,74 @@ typedef struct s_game
 	t_data		surfaces[4];
 	t_data		render_data;
 	t_player	ray;
-	//t_sprite	sprite_data;
-	е_point2D	*sprites_pos;
-	t_material material_data;
-}			t_game;
+	е_point2D *sprites_pos;
+	t_material	material_data;
+}				t_game;
 
+// init
+void			game_init(t_game *game);
+int				init_start_position(char c, t_game *data, int i, int j);
 
-//init 
-void	game_init(t_game *game);
-int	init_start_posicion(char c, t_game *data, int i, int j);
+//util 
+//int	ft_strcmp(char *s1, char *s2);
+int ft_strcmp(const char *s1, const char *s2);
 
 // parce
-void	parsing(char *input, t_game *game);
-void	print_game_info(t_game *game);
-int *parse_map_line(char *line, int width);
+void			parsing(char *input, t_game *game);
+void			print_game_info(t_game *game);
+int				*parse_map_line(char *line, int width);
 
+// color
+int32_t	ft_pixel(int32_t r, int32_t g, int32_t b);
+void			set_color(char *line, t_game *game);
+char			**ft_split(char const *s, char c);
+void			ft_free_split(char **split);
+int				ft_array_len(char **array);
+int				ft_word_count(char const *str, char c);
+int				find_start(const char *s, char c, int i);
 
-// resolut
-int	set_resolution(char *str, t_game *game);
-int	is_char_in_str(char *str, char c);
+// map
+void			set_map_dimensions(char *line, t_game *game);
+int				audit_map(char *str, t_game *game);
+int				map_copy(char *input, t_game *game);
+int				map_duble(char *line, t_game *data);
 
-//color 
-void	set_color(char *line, t_game *game);
-char	**ft_split(char const *s, char c);
+// texture
+void			set_texture(char *line, t_game *game);
 
-//map
-void	set_map_dimensions(char *line, t_game *game);
-int	audit_map(char *str, t_game *game);
-int	map_copy(char *input, t_game *game);
-int	map_duble(char *line, t_game *data);
+// util
+int				is_line_empty(char *str);
+// void	errmsg(t_data *data, const char *msg);
 
-//texture
-void set_texture(char *line, t_game *game);
+// clean
+void			error_free(t_game *data, char *str);
+int				destroy(t_game *game);
 
-//util
-int	is_line_empty(char *str);
-//void	errmsg(t_data *data, const char *msg);
+// get_next
+int				get_next_line(int fd, char **line);
+int				ft_strlen(char *str);
+char			*ft_substr(char const *s, unsigned int start, size_t len);
+char			*ft_strjoin(char *s1, char *s2);
+char			*ft_subbuff(char *buff, int start, int len);
 
-//clean
-void	error_free(t_game *data, char *str);
-int	destroy(t_game *game);
+// sprit
 
+void			init_pos_move(t_game *game);
+void			sprite_start(t_game *game);
 
-//get_next
-int		get_next_line(int fd, char **line);
-int			ft_strlen(char *str);
-char		*ft_substr(char const *s, unsigned int start, size_t len);
-char		*ft_strjoin(char *s1, char *s2);
-char		*ft_subbuff(char *buff, int start, int len);
+// mlx
+int				run_mlx(t_game *game);
+int				execute_raycasting(t_game *recup);
+void			texture_run(t_game *game);
+void			draw_wall(t_game *game);
+int				textur_color(t_game *game);
 
-//sprit 
-
-void	init_pos_move(t_game *game);
-void	sprite_start(t_game *game);
-
-//mlx 
-int	run_mlx(t_game *game);
-int	execute_raycasting(t_game *recup);
-void	texture_run(t_game *game);
-void	draw_wall(t_game *game);
-int	textur_color(t_game *game);
-
-
-//move
-int	press_key(int input, t_game *game);
-int	input_keyboard(int sense, t_game *game);
-void funk_A_D(t_game *game);
-void	funk_W_S(t_game *game);
-void	funk_left_right(t_game *game);
-void	swap_images(t_game *game);
-
+// move
+int				press_key(int input, t_game *game);
+int				input_keyboard(int sense, t_game *game);
+void			funk_a_d(t_game *game);
+void			funk_w_s(t_game *game);
+void			funk_left_right(t_game *game);
+void			swap_images(t_game *game);
 
 #endif
