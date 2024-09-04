@@ -6,7 +6,7 @@
 /*   By: smoreron <7353718@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 21:01:20 by smoreron          #+#    #+#             */
-/*   Updated: 2024/09/04 18:14:18 by smoreron         ###   ########.fr       */
+/*   Updated: 2024/09/04 21:48:07 by smoreron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,33 +25,32 @@ bool is_valid_key(const char *key) {
 }
 
 
-int	*parse_map_line(char *line, int width)
-{
-	int	*map_line;
-	int	i;
+// int	*parse_map_line(char *line, int width)
+// {
+// 	int	*map_line;
+// 	int	i;
 
-	i = 0;
-	map_line = (int *)malloc(sizeof(int) * width);
-	while (i < width)
-	{
-		if (line[i] == ' ')
-			map_line[i] = 0;
-		else if (line[i] == '1')
-			map_line[i] = 1;
-		else if (line[i] == '0')
-			map_line[i] = 0;
-		else if (line[i] == 'N' || line[i] == 'S' || line[i] == 'E'
-			|| line[i] == 'W')
-			map_line[i] = 0;
-		else
-		{
-			free(map_line);
-			return (NULL);
-		}
-		i++;
-	}
-	return (map_line);
-}
+// 	i = 0;
+// 	map_line = (int *)malloc(sizeof(int) * width);
+// 	while (i < width)
+// 	{
+// 		if (line[i] == ' ')
+// 			map_line[i] = 0;
+// 		else if (line[i] == '1')
+// 			map_line[i] = 1;
+// 		else if (line[i] == '0')
+// 			map_line[i] = 0;
+// 		else if (line[i] == 'N' || line[i] == 'S' || line[i] == 'E'
+// 			|| line[i] == 'W')
+// 			map_line[i] = 0;
+// 		else
+// 		{
+// 			error_free(game, "fail map");
+// 		}
+// 		i++;
+// 	}
+// 	return (map_line);
+// }
 
 
 void print_map(t_game *game)
@@ -127,5 +126,5 @@ void	parsing(char *input, t_game *game)
 	if (game->mapWidth == 0 || game->mapHeight == 0 || game->error_code < 0)
 		error_free(game, "Error map\n");
 	map_copy(input, game);
-	print_map(game);	
+	//print_map(game);	
 }

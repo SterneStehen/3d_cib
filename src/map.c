@@ -6,7 +6,7 @@
 /*   By: smoreron <7353718@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 13:53:05 by smoreron          #+#    #+#             */
-/*   Updated: 2024/09/04 18:14:05 by smoreron         ###   ########.fr       */
+/*   Updated: 2024/09/04 22:19:10 by smoreron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int calcul_arr(char **array)
     {
         length++;
     }
-	printf("arr_len = %d", length );
+	//printf("arr_len = %d", length );
     return length;
 }
 
@@ -128,7 +128,7 @@ int	map_copy(char *intput, t_game *game)
 	ret = 1;
 	line = NULL;
 	fd = open(intput, O_RDONLY);
-	if (!(game->level_map = malloc(sizeof(char *) * game->mapHeight)))
+	if (!(game->level_map = malloc(sizeof(char *) * game->mapHeight+1)))
 		return (0);
 
 	while (ret != 0 )
@@ -179,8 +179,7 @@ int	audit_map(char *str, t_game *game)
 			if (game->inside_map == 1)
 			{
 				game->error_code = -1;
-				printf("Invalid character '%c' in the map at position %d\n",
-					str[i], i);
+				printf("Invalid character\n");
 			}
 			return (0);
 		}
@@ -195,6 +194,8 @@ int	audit_map(char *str, t_game *game)
 	}
 	return (0);
 }
+
+
 
 void	check_map_data(t_game *game)
 {

@@ -4,8 +4,8 @@ WE ./images/WE.xpm
 EA ./images/EA.xpm
 
 
-F 26,75,247
-C 255,215,0
+F 255, 215, 0
+C 70, 130, 180
 
 
 
