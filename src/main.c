@@ -6,7 +6,7 @@
 /*   By: smoreron <7353718@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 21:01:29 by smoreron          #+#    #+#             */
-/*   Updated: 2024/09/04 14:27:51 by smoreron         ###   ########.fr       */
+/*   Updated: 2024/09/04 16:32:22 by smoreron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	main(int argc, char **argv)
 	if (check_input(argc, argv) != 1)
 		return (0);
 	game_init(&game);
+
 	parsing(argv[1], &game);
 
 	run_mlx(&game);

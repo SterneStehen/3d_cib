@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cpuiu <cpuiu@student.42.fr>                +#+  +:+       +#+        */
+/*   By: smoreron <7353718@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 21:02:06 by smoreron          #+#    #+#             */
-/*   Updated: 2024/09/04 14:05:27 by cpuiu            ###   ########.fr       */
+/*   Updated: 2024/09/04 18:14:31 by smoreron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,14 @@
 # define CUB3D_H
 
 // for linux
-// # include "../minilibx-linux/mlx.h"
+# include "../minilibx-linux/mlx.h"
+# include <X11/X.h>
+# include <X11/Xlib.h>
 
 // for MacOs:
-# include "../minilibx_opengl/mlx.h"
-# include <OpenGL/gl.h>
-# include <OpenGL/glu.h>
+// # include "../minilibx_opengl/mlx.h"
+// # include <OpenGL/gl.h>
+// # include <OpenGL/glu.h>
 # include <fcntl.h>
 # include <math.h>
 # include <stdio.h>
@@ -157,6 +159,8 @@ int ft_strcmp(const char *s1, const char *s2);
 void			parsing(char *input, t_game *game);
 void			print_game_info(t_game *game);
 int				*parse_map_line(char *line, int width);
+int calcul_arr(char **array);
+
 
 // color
 int32_t	ft_pixel(int32_t r, int32_t g, int32_t b);
@@ -172,6 +176,7 @@ void			set_map_dimensions(char *line, t_game *game);
 int				audit_map(char *str, t_game *game);
 int				map_copy(char *input, t_game *game);
 int				map_duble(char *line, t_game *data);
+int parse_map(char *input, t_game *game);
 
 // texture
 void			set_texture(char *line, t_game *game);

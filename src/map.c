@@ -6,121 +6,117 @@
 /*   By: smoreron <7353718@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 13:53:05 by smoreron          #+#    #+#             */
-/*   Updated: 2024/09/04 15:17:55 by smoreron         ###   ########.fr       */
+/*   Updated: 2024/09/04 18:14:05 by smoreron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-// int	validate_map_walls(t_game *data)
-// {
-// 	int	i;
-// 	int	ret;
-
-// 	ret = 1;
-// 	// if (data->mapHeight == 0 || data->mapWidth == 0 || !data->level_map)
-// 	// 	return (1);
-// 	i = 0;
-// 	while (i < data->mapHeight)
-// 	{
-// 		if (data->level_map[i][0] != '1' || data->level_map[i][data->mapWidth
-// 			- 1] != '1')
-// 			return (ret);
-// 		i++;
-// 	}
-// 	i = 0;
-// 	while (data->level_map[0][i] != '\0')
-// 	{
-// 		if (data->level_map[0][i] != '1')
-// 			return (ret);
-// 		i++;
-// 	}
-// 	i = 0;
-// 	while (data->level_map[data->mapHeight - 1][i] != '\0')
-// 	{
-// 		if (data->level_map[data->mapHeight - 1][i] != '1')
-// 			return (ret);
-// 		i++;
-// 	}
-// 	return (0);
-// }
-
-int	map_duble(char *line, t_game *data)
+int calcul_arr(char **array)
 {
-	static int	i = 0;
-	int			j;
+    int length = 0;
 
-	j = 0;
-	data->level_map[i] = NULL;
-	if (!(data->level_map[i] = malloc(sizeof(char) * data->mapWidth + 1)))
-		return (0);
-	while (line[j] != '\0')
+    while (array[length] != NULL)
+    {
+        length++;
+    }
+	printf("arr_len = %d", length );
+    return length;
+}
+
+static int	is_wall(int i, int j, t_game *game)
+{
+	if (game->level_map[i][j] == '0' || (game->level_map[i][j] != '1' && game->level_map[i][j] != ' '))
 	{
-		if (init_start_position(line[j], data, i, j) == 1)
-			data->level_map[i][j] = '0';
-		else if (strlen(line) == 0)
-			continue; // Игнорировать пустую строку
-		// else if (line[j] == ' ')
-		// 	data->level_map[i][j] = '1';
-		else
-			data->level_map[i][j] = line[j];
-		j++;
+		if (i == 0 || j == 0 || !game->level_map[i + 1] || !game->level_map[i][j + 1])
+			return (1);
+		if (game->level_map[i - 1] && game->level_map[i - 1][j] && game->level_map[i - 1][j] == ' ')
+			return (1);
+		if (game->level_map[i + 1] && game->level_map[i + 1][j] && game->level_map[i + 1][j] == ' ')
+			return (1);
+		if (game->level_map[i][j - 1] && game->level_map[i][j - 1] == ' ')
+			return (1);
+		if (game->level_map[i][j + 1] && game->level_map[i][j + 1] == ' ')
+			return (1);
 	}
-	while (j <= (data->mapWidth - 1))
-	{
-		data->level_map[i][j] = '1';
-		j++;
-	}
-	data->level_map[i][j] = '\0';
-	i++;
 	return (0);
 }
 
+static int	audit_full(int index, t_game *game)
+{
+	int		i;
 
-int leh_array(char *arr[], int rows) {
-    int max_cols = 0;
-    for (int i = 0; i < rows; i++) {
-        if (arr[i] == NULL) {
-            continue; // Пропускаем строки, которые равны NULL
-        }
-        int length = strlen(arr[i]); // Определяем длину каждой строки
-        if (length > max_cols) {
-            max_cols = length; // Находим максимальную длину строки
-        }
-    }
-    return max_cols;
+	i = index + 1;
+	while (game->level_map[i])
+	{
+		if (ft_strlen(game->level_map[i]) > 0)
+			return (1);
+		i++;
+	}
+	game->level_map[i] = NULL;
+	return (0);
 }
 
-// Функция для печати двумерного массива строк
-void printArray(char *arr[]) {
-    if (arr == NULL) {
-        printf("Error: The array is NULL.\n");
-        return;
-    }
+int	wall_check(t_game *game)
+{
+	int	i;
+	int	j;
 
-    int rows = 0;
-
-    // Вычисляем количество строк в массиве
-    while (arr[rows] != NULL) {
-        rows++;
-    }
-
-    if (rows == 0) {
-        printf("Error: The array is empty.\n");
-        return;
-    }
-
-    int cols = leh_array(arr, rows); // Определяем количество колонок
-    printf("Rows: %d, Columns: %d\n", rows, cols);
-
-    for (int i = 0; i < rows; i++) {
-        if (arr[i] != NULL) {
-            printf("%s\n", arr[i]); // Печатаем каждую строку массива
-        } else {
-            printf("Warning: Null string encountered.\n");
-        }
-    }
+	if (calcul_arr(game->level_map) < 3)
+		return (1);
+	i = 0;
+	while (game->level_map[i])
+	{
+		if (ft_strlen(game->level_map[i]) == 0)
+		{
+			if (audit_full(i, game) == 1)
+				return (1);
+			break;
+		}
+		j = 0;
+		while (game->level_map[i][j])
+		{
+			if (is_wall(i, j, game) == 1)
+				return (1);
+			j++;
+		}
+		i++;
+	}
+	return (0);
 }
+
+int map_duble(char *line, t_game *data) {
+    static int i = 0;
+    int j;
+    int line_length = strlen(line);  // Use strlen to get the length of the line
+
+    j = 0;
+    data->level_map[i] = NULL;
+
+    // Allocate memory based on the actual length of the line + 1 for null-terminator
+    if (!(data->level_map[i] = malloc(sizeof(char) * (line_length + 1))))
+        return (0);
+
+    while (line[j] != '\0') {
+        if (init_start_position(line[j], data, i, j) == 1)
+            data->level_map[i][j] = '0';
+        else if (line_length == 0)
+            continue; // Ignore empty line
+        else
+            data->level_map[i][j] = line[j];
+        j++;
+    }
+
+    // Use line_length instead of data->mapWidth for null-terminator placement
+    data->level_map[i][j] = '\0';
+    i++;
+    return (0);
+}
+
+
+
+
+
 
 
 int	map_copy(char *intput, t_game *game)
@@ -154,12 +150,12 @@ int	map_copy(char *intput, t_game *game)
 		}
 		free(line);
 		if (game->error_code == -1)
-			error_free(game, "parsing map error\n");
+			error_free(game, "parsing map error2\n");
 	}
 	close(fd);
-	//printArray(game->level_map);
-	//if (validate_map_walls(game) == 1)
-	//  error_free(game, "Map not surrounded by 1s\n");
+	game->level_map[game->mapHeight] = NULL;
+	if(wall_check(game) == 1)
+		error_free(game, "wall map is wrong");
 	return (0);
 }
 
@@ -176,7 +172,7 @@ int	audit_map(char *str, t_game *game)
 	{
 		if (str[i] == '1' || str[i] == '0')
 			contains_map_char = 1;
-		if (str[i] != ' ' && str[i] != '0' && str[i] != '1' && str[i] != '2'
+		if (str[i] != ' ' && str[i] != '0' && str[i] != '1'
 			&& str[i] != 'N' && str[i] != 'E' && str[i] != 'W' && str[i] != 'S'
 			&& str[i] != '\n' && str[i] != '\t')
 		{

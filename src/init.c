@@ -6,7 +6,7 @@
 /*   By: smoreron <7353718@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 18:08:04 by smoreron          #+#    #+#             */
-/*   Updated: 2024/09/04 02:59:34 by smoreron         ###   ########.fr       */
+/*   Updated: 2024/09/04 17:57:17 by smoreron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ void	game_init(t_game *game)
 	// game->mapHeight = 0;
 	// game->mapWidth = 0;
 	game->level_map = NULL;
+	//game->map = NULL;
 	game->start_dir = 'x';
 	// game->texture_audit[0] = 0;
 	// game->texture_audit[1] = 0;
