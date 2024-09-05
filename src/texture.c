@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoreron <7353718@gmail.com>               +#+  +:+       +#+        */
+/*   By: cpuiu <cpuiu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 20:40:15 by smoreron          #+#    #+#             */
-/*   Updated: 2024/09/04 03:00:38 by smoreron         ###   ########.fr       */
+/*   Updated: 2024/09/04 22:39:31 by cpuiu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,68 +34,37 @@ void	texture_run(t_game *game)
 				&(game->surfaces[i].win_height));
 		if (!game->surfaces[i].img)
 			error_free(game, texture_names[i]);
-		game->surfaces[i].buffer_pix
-			= (int *)mlx_get_data_addr(game->surfaces[i].img,
+		game->surfaces[i].buffer_pix = (int *)
+			mlx_get_data_addr(game->surfaces[i].img,
 				&game->surfaces[i].bits_pix, &game->surfaces[i].size_line,
 				&game->surfaces[i].byte_order);
 	}
 }
 
+void	load_texture(char *line, char **texture, int *audit, t_game *game)
+{
+	int	fd;
+
+	if (*audit == 1)
+		error_free(game, "error textures duplicated\n");
+	*texture = strdup(line + 3);
+	if (!*texture)
+		error_free(game, "Memory allocation error for texture\n");
+	fd = open(*texture, O_RDONLY);
+	if (fd == -1)
+		error_free(game, "Texture file loading failed\n");
+	*audit = 1;
+	close(fd);
+}
+
 void	set_texture(char *line, t_game *game)
 {
-	int fd;
 	if (strncmp(line, "NO ", 3) == 0)
-	{
-		if(game->texture_audit[0] == 1)
-			error_free(game, "duble Norton texture file fail");
-			
-		game->north_texture = strdup(line + 3);
-		if (!game->north_texture)
-			error_free(game, "Memory allocation error for north texture\n");
-		
-		fd = open(game->north_texture, O_RDONLY);
-		if(fd == -1)
-			error_free(game, "Norton texture file fail");
-		//close(fd);
-		game->texture_audit[0] = 1;
-	}
+		load_texture(line, &game->north_texture, &game->texture_audit[0], game);
 	else if (strncmp(line, "SO ", 3) == 0)
-	{
-		if(game->texture_audit[1] == 1)
-		 	error_free(game, "duble south_texture file fail");
-		game->south_texture = strdup(line + 3);
-		if (!game->south_texture)
-			error_free(game, "Memory allocation error for south texture\n");
-		fd = open(game->south_texture, O_RDONLY);
-		if(fd == -1)
-			error_free(game, "south_texture file fail");
-		game->texture_audit[1] = 1;
-		//close(fd);
-	}
+		load_texture(line, &game->south_texture, &game->texture_audit[1], game);
 	else if (strncmp(line, "EA ", 3) == 0)
-	{
-		 if(game->texture_audit[2] == 1)
-		 	error_free(game, "duble east_texture");
-		game->east_texture = strdup(line + 3);
-		if (!game->east_texture)
-			error_free(game, "Memory allocation error for east texture\n");
-		fd = open(game->east_texture, O_RDONLY);
-		if(fd == -1)
-			error_free(game, "east_texture file fail");
-		game->texture_audit[2] = 1;
-		//close(fd);
-	}
+		load_texture(line, &game->east_texture, &game->texture_audit[2], game);
 	else if (strncmp(line, "WE ", 3) == 0)
-	{
-		if(game->texture_audit[3] == 1)
-		 	error_free(game, "duble west_texture");
-		game->west_texture = strdup(line + 3);
-		if (!game->west_texture)
-			error_free(game, "Memory allocation error for west texture\n");
-		fd = open(game->west_texture, O_RDONLY);
-		if(fd == -1)
-			error_free(game, "west_texture file fail");
-		game->texture_audit[3] = 1;
-		//close(fd);
-	}
+		load_texture(line, &game->west_texture, &game->texture_audit[3], game);
 }

@@ -6,7 +6,7 @@
 /*   By: cpuiu <cpuiu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 16:41:33 by smoreron          #+#    #+#             */
-/*   Updated: 2024/09/03 12:58:37 by cpuiu            ###   ########.fr       */
+/*   Updated: 2024/09/04 23:41:22 by cpuiu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	run_mlx(t_game *game)
 		mlx_get_data_addr(game->render_data.overlay_image,
 			&game->render_data.bits_pix, &game->render_data.size_line,
 			&game->render_data.byte_order);
-	mlx_hook(game->render_data.win, 33, 1L << 17, destroy, game);
+	mlx_hook(game->render_data.win, 17, 0, close_win, game);
 	mlx_hook(game->render_data.win, 2, 1L << 0, input_keyboard, game);
 	mlx_loop_hook(game->render_data.mlx_ptr, execute_raycasting, game);
 	mlx_hook(game->render_data.win, 3, 1L << 1, press_key, game);

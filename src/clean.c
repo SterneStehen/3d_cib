@@ -6,7 +6,7 @@
 /*   By: cpuiu <cpuiu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:05:09 by smoreron          #+#    #+#             */
-/*   Updated: 2024/09/03 14:05:38 by cpuiu            ###   ########.fr       */
+/*   Updated: 2024/09/04 23:33:15 by cpuiu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	free_map(t_game *data)
 	if (data->level_map != NULL)
 	{
 		i = 0;
-		while (i < data->mapHeight)
+		while (i < data->map_height)
 		{
 			if (data->level_map[i])
 			{

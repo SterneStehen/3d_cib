@@ -1,42 +1,33 @@
-NAME := cub3D
 
-CC := gcc
-CFLAGS := -Wall -Wextra -Werror -I include
 
-SRCDIR := src
-OBJDIR := obj
+CC = cc
+CFLAGS = -Wall -Wextra -Werror -I include -I minilibx_macos
 
-INCLUDES := -I include
 
-SRCS := $(wildcard $(SRCDIR)/*.c)
-OBJS := $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
+SRCDIR = src
+OBJDIR = obj
+LIBDIR = minilibx_opengl
 
-# Путь к библиотекам
-LIBFT := ./minilibx-linux/libmlx.a
+SRC = $(SRCDIR)/main.c $(SRCDIR)/parser.c $(SRCDIR)/clean.c $(SRCDIR)/color.c $(SRCDIR)/texture_color.c\
+		$(SRCDIR)/draw_wall.c $(SRCDIR)/get_next_util.c $(SRCDIR)/get_next.c $(SRCDIR)/init.c\
+		$(SRCDIR)/map.c $(SRCDIR)/move.c $(SRCDIR)/run_mlx.c $(SRCDIR)/texture.c\
+		$(SRCDIR)/render.c $(SRCDIR)/init_utils.c $(SRCDIR)/color_utils.c $(SRCDIR)/move_utils.c\
+		$(SRCDIR)/map_utils.c $(SRCDIR)/map_utils_2.c $(SRCDIR)/color_utils_2.c
 
-# Определяем операционную систему
-UNAME := $(shell uname)
+OBJ = $(SRC:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 
-# Флаги для линковки (для Linux)
-ifeq ($(UNAME), Linux)
-	LDFLAGS := -Lminilibx-linux -lmlx -lm -lX11 -lXext -lbsd
-endif
+NAME = cub3D
 
-# Флаги для линковки (для macOS)
-ifeq ($(UNAME), Darwin)
-	LDFLAGS := -Lminilibx_macos -lmlx -lm
-endif
+LIBS = -L$(LIBDIR) -lmlx -framework OpenGL -framework AppKit -framework Cocoa
 
 all: $(NAME)
 
-$(NAME): $(OBJS) $(LIBFT)
-	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
+$(NAME): $(OBJ)
+	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
-	$(CC) $(CFLAGS) $(INCLUDES) -o $@ -c $<
-
-$(OBJDIR):
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
 	mkdir -p $(OBJDIR)
+	$(CC) $(CFLAGS) -o $@ -c $<
 
 clean:
 	rm -rf $(OBJDIR)
@@ -45,14 +36,5 @@ fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
-
-$(LIBFT):
-ifeq ($(UNAME), Linux)
-	make -C minilibx-linux
-endif
-
-ifeq ($(UNAME), Darwin)
-	make -C minilibx_macos
-endif
 
 .PHONY: all clean fclean re

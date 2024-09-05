@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoreron <7353718@gmail.com>               +#+  +:+       +#+        */
+/*   By: cpuiu <cpuiu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 21:02:06 by smoreron          #+#    #+#             */
-/*   Updated: 2024/09/04 18:14:31 by smoreron         ###   ########.fr       */
+/*   Updated: 2024/09/05 01:09:33 by cpuiu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,20 @@
 # define CUB3D_H
 
 // for linux
-# include "../minilibx-linux/mlx.h"
-# include <X11/X.h>
-# include <X11/Xlib.h>
+// # include "../minilibx-linux/mlx.h"
 
 // for MacOs:
-// # include "../minilibx_opengl/mlx.h"
-// # include <OpenGL/gl.h>
-// # include <OpenGL/glu.h>
+//# include "../libft/libft.h"
+# include "../minilibx_opengl/mlx.h"
+# include <OpenGL/gl.h>
+# include <OpenGL/glu.h>
 # include <fcntl.h>
 # include <math.h>
+# include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
-# include <stdbool.h>
-//# include "../libft/libft.h"
 
 # define WIN_WIDTH 800
 # define WIN_HEIGHT 600
@@ -40,18 +38,12 @@
 
 # define BUFFER_SIZE 4096
 
-typedef struct s_point2D
-{
-	double		x;
-	double		y;
-} е_point2D;
-
 typedef struct s_material
 {
 	int			dir;
-	double		wallHitX;
-	int			coordX;
-	int			coordY;
+	double		wall_hit_x;
+	int			coord_x;
+	int			coord_y;
 	double		step;
 	double		position;
 }				t_material;
@@ -60,15 +52,15 @@ typedef struct s_player
 {
 	double		pos_x;
 	double		pos_y;
-	double		dirX;
+	double		dir_x;
 	double		dir_y;
-	double		planX;
-	double		planY;
+	double		plan_x;
+	double		plan_y;
 	double		beam_dir_x;
 	double		beam_dir_y;
-	double		cameraX;
-	int			mapX;
-	int			mapY;
+	double		camera_x;
+	int			map_x;
+	int			map_y;
 	double		grid_x;
 	double		grid_y;
 	double		dist_to_side_x;
@@ -116,8 +108,8 @@ typedef struct s_game
 	int			i;
 	int			floor_color;
 	int			ceiling_color;
-	int			mapHeight;
-	int			mapWidth;
+	int			map_height;
+	int			map_width;
 	int			pos_xp;
 	int			pos_yp;
 	double		pdirx;
@@ -132,7 +124,7 @@ typedef struct s_game
 	int			total_sum;
 	int			invalid_chars;
 	int			counter1;
-	int			texture_audit[4];
+	int			texture_audit[7];
 	char		*north_texture;
 	char		*south_texture;
 	char		*west_texture;
@@ -143,7 +135,6 @@ typedef struct s_game
 	t_data		surfaces[4];
 	t_data		render_data;
 	t_player	ray;
-	е_point2D *sprites_pos;
 	t_material	material_data;
 }				t_game;
 
@@ -151,32 +142,33 @@ typedef struct s_game
 void			game_init(t_game *game);
 int				init_start_position(char c, t_game *data, int i, int j);
 
-//util 
-//int	ft_strcmp(char *s1, char *s2);
-int ft_strcmp(const char *s1, const char *s2);
+// util
+// int	ft_strcmp(char *s1, char *s2);
+int				ft_strcmp(const char *s1, const char *s2);
 
 // parce
 void			parsing(char *input, t_game *game);
 void			print_game_info(t_game *game);
 int				*parse_map_line(char *line, int width);
-int calcul_arr(char **array);
-
+int				calcul_arr(char **array);
 
 // color
-int32_t	ft_pixel(int32_t r, int32_t g, int32_t b);
+int32_t			ft_pixel(int32_t r, int32_t g, int32_t b);
 void			set_color(char *line, t_game *game);
 char			**ft_split(char const *s, char c);
 void			ft_free_split(char **split);
 int				ft_array_len(char **array);
 int				ft_word_count(char const *str, char c);
 int				find_start(const char *s, char c, int i);
+void			check_color_range(t_game *game, int r, int g, int b);
 
 // map
 void			set_map_dimensions(char *line, t_game *game);
 int				audit_map(char *str, t_game *game);
 int				map_copy(char *input, t_game *game);
 int				map_duble(char *line, t_game *data);
-int parse_map(char *input, t_game *game);
+int				parse_map(char *input, t_game *game);
+int				wall_check(t_game *game);
 
 // texture
 void			set_texture(char *line, t_game *game);
@@ -188,7 +180,7 @@ int				is_line_empty(char *str);
 // clean
 void			error_free(t_game *data, char *str);
 int				destroy(t_game *game);
-
+int				close_win(t_game *game);
 // get_next
 int				get_next_line(int fd, char **line);
 int				ft_strlen(char *str);

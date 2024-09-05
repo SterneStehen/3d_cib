@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoreron <7353718@gmail.com>               +#+  +:+       +#+        */
+/*   By: cpuiu <cpuiu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 18:08:04 by smoreron          #+#    #+#             */
-/*   Updated: 2024/09/04 17:57:17 by smoreron         ###   ########.fr       */
+/*   Updated: 2024/09/05 01:13:06 by cpuiu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,15 @@ int	init_start_position(char c, t_game *data, int i, int j)
 {
 	if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
 	{
+		if (data->texture_audit[6] == 1)
+		{
+			printf("Multiple player positions\n");
+			exit(0);
+		}
 		if (data->start_dir != 'x')
 			data->is_multiplayer = 1;
 		data->start_dir = c;
+		data->texture_audit[6] = 1;
 		data->pos_xp = i;
 		data->pos_yp = j;
 		return (1);
@@ -82,15 +88,8 @@ void	game_init(t_game *game)
 	game->i = 0;
 	game->floor_color = -1;
 	game->ceiling_color = -1;
-	// game->mapHeight = 0;
-	// game->mapWidth = 0;
 	game->level_map = NULL;
-	//game->map = NULL;
 	game->start_dir = 'x';
-	// game->texture_audit[0] = 0;
-	// game->texture_audit[1] = 0;
-	// game->texture_audit[2] = 0;
-	// game->texture_audit[3] = 0;
 	extra_init(game);
 	i = 0;
 	while (i < 4)

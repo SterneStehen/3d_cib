@@ -6,7 +6,7 @@
 /*   By: cpuiu <cpuiu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 20:40:04 by smoreron          #+#    #+#             */
-/*   Updated: 2024/09/04 14:07:29 by cpuiu            ###   ########.fr       */
+/*   Updated: 2024/09/05 00:36:53 by cpuiu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,30 +61,4 @@ void	check_color_range(t_game *game, int r, int g, int b)
 		game->error_code = 2;
 		error_free(game, "Color value out of range\n");
 	}
-}
-
-void	set_color(char *line, t_game *game)
-{
-	char	**split_line;
-	int		r;
-	int		g;
-	int		b;
-
-	if (line[0] != 'F' && line[0] != 'C')
-		return ;
-	split_line = ft_split(line + 1, ',');
-	if (!split_line || ft_array_len(split_line) != 3)
-	{
-		game->error_code = 2;
-		error_free(game, "Color parsing error\n");
-	}
-	r = atoi(split_line[0]);
-	g = atoi(split_line[1]);
-	b = atoi(split_line[2]);
-	check_color_range(game, r, g, b);
-	if (line[0] == 'F')
-		game->floor_color = ft_pixel(r, g, b);
-	else if (line[0] == 'C')
-		game->ceiling_color = ft_pixel(r, g, b);
-	ft_free_split(split_line);
 }
