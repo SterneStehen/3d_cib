@@ -6,7 +6,7 @@
 /*   By: cpuiu <cpuiu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 20:49:30 by smoreron          #+#    #+#             */
-/*   Updated: 2024/09/04 23:34:01 by cpuiu            ###   ########.fr       */
+/*   Updated: 2024/09/05 11:23:55 by cpuiu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,10 @@ static void	perform_dda_until_hit(t_game *game)
 	}
 }
 
+/// @brief translating the player's view into a 2D projection on the screen
+/// This excerpt is part of a raycasting engine, specifically handling the 
+/// logic for detecting wall collisions and drawing walls.
+/// @param game 
 void	draw_wall(t_game *game)
 {
 	calculate_ray_step_and_grid_intersection(game);

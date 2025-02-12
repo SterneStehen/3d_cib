@@ -6,7 +6,7 @@
 /*   By: cpuiu <cpuiu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 21:02:06 by smoreron          #+#    #+#             */
-/*   Updated: 2024/09/05 01:09:33 by cpuiu            ###   ########.fr       */
+/*   Updated: 2024/09/05 12:15:03 by cpuiu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,13 @@
 # define MAX_BUFFER_SIZE 1920
 
 # define BUFFER_SIZE 4096
+
+typedef struct s_color
+{
+	int			r;
+	int			g;
+	int			b;
+}				t_color;
 
 typedef struct s_material
 {
@@ -143,8 +150,10 @@ void			game_init(t_game *game);
 int				init_start_position(char c, t_game *data, int i, int j);
 
 // util
-// int	ft_strcmp(char *s1, char *s2);
 int				ft_strcmp(const char *s1, const char *s2);
+int				ft_isdigit(int c);
+long			ft_atoi2(const char *nptr);
+int				check_str_digits(char *str);
 
 // parce
 void			parsing(char *input, t_game *game);
@@ -173,10 +182,6 @@ int				wall_check(t_game *game);
 // texture
 void			set_texture(char *line, t_game *game);
 
-// util
-int				is_line_empty(char *str);
-// void	errmsg(t_data *data, const char *msg);
-
 // clean
 void			error_free(t_game *data, char *str);
 int				destroy(t_game *game);
@@ -191,7 +196,7 @@ char			*ft_subbuff(char *buff, int start, int len);
 // sprit
 
 void			init_pos_move(t_game *game);
-void			sprite_start(t_game *game);
+// void			sprite_start(t_game *game);
 
 // mlx
 int				run_mlx(t_game *game);

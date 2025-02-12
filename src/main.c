@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoreron <7353718@gmail.com>               +#+  +:+       +#+        */
+/*   By: cpuiu <cpuiu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 21:01:29 by smoreron          #+#    #+#             */
-/*   Updated: 2024/09/05 03:09:18 by smoreron         ###   ########.fr       */
+/*   Updated: 2024/09/05 12:14:24 by cpuiu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,10 @@ int	main(int argc, char **argv)
 	if (check_input(argc, argv) != 1)
 		return (0);
 	game_init(&game);
-	//system("leaks cub3D");
 	parsing(argv[1], &game);
 	run_mlx(&game);
 	error_free(&game, "all pass\n");
 	return (0);
 }
+
+	// system("leaks cub3D");

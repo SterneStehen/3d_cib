@@ -6,12 +6,24 @@
 /*   By: cpuiu <cpuiu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 16:41:33 by smoreron          #+#    #+#             */
-/*   Updated: 2024/09/04 23:41:22 by cpuiu            ###   ########.fr       */
+/*   Updated: 2024/09/05 11:24:37 by cpuiu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
+/// @brief Prepares the game's rendering data and initializes 
+/// the MiniLibX library.
+/// @param game A pointer to the game structure to initialize 
+/// rendering data for.
+///
+/// This function performs initial setup for the game's rendering, including:
+/// - Initializing player position and movement.
+/// - Initializing the MiniLibX library and handling initialization failure.
+/// - Adjusting the game resolution to not exceed the maximum allowed
+///  screen size.
+/// - Loading textures required for the game.
+/// - Creating an image buffer for rendering.
 static void	run_mlx_helper(t_game *game)
 {
 	int	screen_width;
@@ -40,6 +52,10 @@ static void	run_mlx_helper(t_game *game)
 			&game->render_data.byte_order);
 }
 
+/// @brief Initializes and runs the main loop of the MiniLibX application.
+/// @param game A pointer to the game structure containing all game
+/// and rendering data.
+/// @return Always returns 0 to indicate success.
 int	run_mlx(t_game *game)
 {
 	run_mlx_helper(game);

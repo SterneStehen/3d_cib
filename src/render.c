@@ -6,7 +6,7 @@
 /*   By: cpuiu <cpuiu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 21:01:13 by smoreron          #+#    #+#             */
-/*   Updated: 2024/09/04 23:43:56 by cpuiu            ###   ########.fr       */
+/*   Updated: 2024/09/05 11:25:45 by cpuiu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,28 @@ int32_t	ft_pixel(int32_t r, int32_t g, int32_t b)
 	return (r << 24 | g << 16 | b << 8);
 }
 
+/// @brief Calculates distances to the nearest side walls in the x 
+// and y directions.
+/// @param game A pointer to the game structure containing 
+/// raycasting and rendering data.
+/// This function performs the following operations:
+///
+///	- Initializes the ray's position on the map based on the
+///  player's current position.
+/// - Sets the movement and rotation speeds for the ray.
+///
+///	- Calculates the distance to the nearest side wall in the
+/// x-direction (dist_to_side_x).
+///
+///	- Calculates the distance to the nearest side wall in the
+/// y-direction (dist_to_side_y).
+///
+///	- These distances are used to perform wall collision detection 
+/// and to calculate the 
+/// length of the ray until it hits a wall.
+/// - Finally,
+///	it calls functions to draw the wall and apply texture/color based on the 
+/// calculated distances.
 void	calculate_distances_to_side(t_game *game)
 {
 	game->ray.map_x = (int)game->ray.pos_x;
@@ -50,6 +72,17 @@ void	calculate_distances_to_side(t_game *game)
 	textur_color(game);
 }
 
+/// @brief Executes the raycasting process for each frame and 
+/// updates the game window.
+/// This function is a core part of the game's rendering loop,
+///	using raycasting to simulate 3D graphics in a 2D environment 
+/// by casting rays from
+/// the player's perspective and drawing vertical slices of 
+/// walls based on the distance 
+/// to obstacles.
+/// @param game A pointer to the game structure containing 
+/// all game and rendering data.
+/// @return Always returns 0 indicating success.
 int	execute_raycasting(t_game *game)
 {
 	mlx_clear_window(game->render_data.mlx_ptr, game->render_data.win);

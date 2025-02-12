@@ -12,7 +12,7 @@ SRC = $(SRCDIR)/main.c $(SRCDIR)/parser.c $(SRCDIR)/clean.c $(SRCDIR)/color.c $(
 		$(SRCDIR)/draw_wall.c $(SRCDIR)/get_next_util.c $(SRCDIR)/get_next.c $(SRCDIR)/init.c\
 		$(SRCDIR)/map.c $(SRCDIR)/move.c $(SRCDIR)/run_mlx.c $(SRCDIR)/texture.c\
 		$(SRCDIR)/render.c $(SRCDIR)/init_utils.c $(SRCDIR)/color_utils.c $(SRCDIR)/move_utils.c\
-		$(SRCDIR)/map_utils.c $(SRCDIR)/map_utils_2.c $(SRCDIR)/color_utils_2.c
+		$(SRCDIR)/map_utils.c $(SRCDIR)/map_utils_2.c $(SRCDIR)/color_utils_2.c $(SRCDIR)/color_parse.c\
 
 OBJ = $(SRC:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 
